@@ -1,0 +1,6 @@
+_extends: .github
+repository:
+  name: husky
+  description: opinionated scaffolder for configuring Git hooks using husky
+  homepage: https://npm.im/@form8ion/husky
+  private: false
