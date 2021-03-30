@@ -2,7 +2,7 @@ import {promises as fs} from 'fs';
 import {Then} from '@cucumber/cucumber';
 import {assert} from 'chai';
 
-async function assertHookContainsScript(hook, script) {
+export async function assertHookContainsScript(hook, script) {
   const hookContents = await fs.readFile(`${process.cwd()}/.husky/${hook}`, 'utf-8');
 
   assert.include(
