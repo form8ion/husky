@@ -13,7 +13,7 @@ async function assertHookContainsScript(hook, script) {
   assert.include(hookContents, script);
 }
 
-Then('husky is configured', async function () {
+Then('husky is configured for {string}', async function (packageManager) {
   assert.include(this.scaffoldResult.devDependencies, 'husky');
-  await assertHookContainsScript('pre-commit', 'npm test');
+  await assertHookContainsScript('pre-commit', `${packageManager} test`);
 });

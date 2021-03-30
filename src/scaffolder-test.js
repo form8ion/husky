@@ -20,11 +20,12 @@ suite('scaffolder', () => {
   test('that husky is configured', async () => {
     const projectRoot = any.string();
     const configDirectory = any.string();
+    const packageManager = any.word();
     mkdir.default.withArgs(`${projectRoot}/.husky`).resolves(configDirectory);
 
-    const {devDependencies} = await scaffold({projectRoot});
+    const {devDependencies} = await scaffold({projectRoot, packageManager});
 
     assert.deepEqual(devDependencies, ['husky']);
-    assert.calledWith(hookCreator.default, {configDirectory, hookName: 'pre-commit', script: 'npm test'});
+    assert.calledWith(hookCreator.default, {configDirectory, hookName: 'pre-commit', script: `${packageManager} test`});
   });
 });
