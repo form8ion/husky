@@ -41,7 +41,7 @@ $ npm install @form8ion/husky --save
 #### Import
 
 ```javascript
-import {scaffold} from '@form8ion/husky';
+import {lift, scaffold} from '@form8ion/husky';
 ```
 
 #### Execute
@@ -49,6 +49,8 @@ import {scaffold} from '@form8ion/husky';
 ```javascript
 (async () => {
   await scaffold({projectRoot: process.cwd(), packageManager: 'foo'});
+
+  await lift({projectRoot: process.cwd(), packageManager: 'foo'});
 })();
 ```
 
