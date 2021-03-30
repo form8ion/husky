@@ -15,5 +15,6 @@ export async function assertHookContainsScript(hook, script) {
 
 Then('husky is configured for {string}', async function (packageManager) {
   assert.include(this.scaffoldResult.devDependencies, 'husky');
+  assert.include(this.scaffoldResult.scripts.prepare, 'husky install');
   await assertHookContainsScript('pre-commit', `${packageManager} test`);
 });

@@ -27,9 +27,10 @@ suite('scaffolder', () => {
     const packageManager = any.word();
     core.fileExists.resolves(false);
 
-    const {devDependencies} = await scaffold({projectRoot, packageManager});
+    const {devDependencies, scripts} = await scaffold({projectRoot, packageManager});
 
     assert.deepEqual(devDependencies, ['husky']);
+    assert.equal(scripts.prepare, 'husky install');
     assert.calledWith(hookCreator.default, {configDirectory, hookName: 'pre-commit', script: `${packageManager} test`});
     assert.neverCalledWith(
       hookCreator.default,
