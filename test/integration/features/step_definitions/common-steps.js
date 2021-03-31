@@ -19,6 +19,7 @@ Before(function () {
 
 After(function () {
   stubbedFs.restore();
+  td.reset();
 });
 
 Given('{string} is the package manager', async function (packageManager) {
