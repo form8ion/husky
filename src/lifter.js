@@ -2,8 +2,9 @@ import semver from 'semver';
 import {info, warn} from '@travi/cli-messages';
 import {fileExists} from '@form8ion/core';
 import execa from '../thirdparty-wrappers/execa';
+import scaffold from './scaffolder';
 
-export default async function ({projectRoot}) {
+export default async function ({projectRoot, packageManager}) {
   const huskyV4ConfigExists = await fileExists(`${projectRoot}/.huskyrc.json`);
 
   try {
@@ -16,7 +17,7 @@ export default async function ({projectRoot}) {
 
       info(outdatedConfigMessage, {level: 'secondary'});
 
-      return {nextSteps: [{summary: outdatedConfigMessage}]};
+      return scaffold({projectRoot, packageManager});
     }
 
     return {};
