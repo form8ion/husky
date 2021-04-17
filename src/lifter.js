@@ -1,3 +1,4 @@
+import {promises as fs} from 'fs';
 import semver from 'semver';
 import {info, warn} from '@travi/cli-messages';
 import {fileExists} from '@form8ion/core';
@@ -17,7 +18,12 @@ export default async function ({projectRoot, packageManager}) {
 
       info(outdatedConfigMessage, {level: 'secondary'});
 
-      return scaffold({projectRoot, packageManager});
+      const [results] = await Promise.all([
+        scaffold({projectRoot, packageManager}),
+        fs.unlink(`${projectRoot}/.huskyrc.json`)
+      ]);
+
+      return results;
     }
 
     return {};

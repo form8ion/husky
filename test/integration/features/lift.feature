@@ -6,6 +6,7 @@ Feature: Husky
     And husky config is in v4 format
     When the husky details are lifted
     Then husky is configured for "npm"
+    And the v4 config is removed
 
   Scenario: Husky v5 installed, v5 config
     Given husky v5 is installed

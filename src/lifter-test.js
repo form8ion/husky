@@ -1,3 +1,4 @@
+import {promises as fs} from 'fs';
 import * as core from '@form8ion/core';
 import {assert} from 'chai';
 import sinon from 'sinon';
@@ -15,6 +16,7 @@ suite('lifter', () => {
   setup(() => {
     sandbox = sinon.createSandbox();
 
+    sandbox.stub(fs, 'unlink');
     sandbox.stub(core, 'fileExists');
     sandbox.stub(execa, 'default');
     sandbox.stub(scaffolder, 'default');
@@ -31,6 +33,7 @@ suite('lifter', () => {
       .resolves({stdout: JSON.stringify({dependencies: {husky: {version: '5.0.0'}}})});
 
     assert.deepEqual(await lift({projectRoot, packageManager}), scaffoldResults);
+    assert.calledWith(fs.unlink, `${projectRoot}/.huskyrc.json`);
   });
 
   test('that husky config is updated when greater than v5 is installed, but config is still for v4', async () => {
