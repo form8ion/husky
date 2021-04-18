@@ -6,7 +6,9 @@ import any from '@travi/any';
 import makeDir from '../../../../thirdparty-wrappers/make-dir';
 
 export async function assertHookContainsScript(hook, script) {
-  const hookContents = await fs.readFile(`${process.cwd()}/.husky/${hook}`, 'utf-8');
+  const pathToHookFile = `${process.cwd()}/.husky/${hook}`;
+
+  const hookContents = await fs.readFile(pathToHookFile, 'utf-8');
 
   assert.include(
     hookContents,
@@ -14,6 +16,8 @@ export async function assertHookContainsScript(hook, script) {
 . "$(dirname "$0")/_/husky.sh"`
   );
   assert.include(hookContents, script);
+  // eslint-disable-next-line no-bitwise
+  assert.equal((`0${(await fs.stat(pathToHookFile)).mode}` & 0o777).toString(8), '755');
 }
 
 Given('husky v5 is installed', async function () {
@@ -46,7 +50,7 @@ Given('husky config is in v5 format', async function () {
 });
 
 Then('husky is configured for {string}', async function (packageManager) {
-  assert.include(this.scaffoldResult.devDependencies, 'husky');
-  assert.include(this.scaffoldResult.scripts.prepare, 'husky install');
+  assert.include(this.result.devDependencies, 'husky@latest');
+  assert.equal(this.result.scripts.prepare, 'husky install');
   await assertHookContainsScript('pre-commit', `${packageManager} test`);
 });

@@ -27,9 +27,9 @@ Given('{string} is the package manager', async function (packageManager) {
 });
 
 When('the project is scaffolded', async function () {
-  this.scaffoldResult = await scaffold({projectRoot: process.cwd(), packageManager: this.packageManager});
+  this.result = await scaffold({projectRoot: process.cwd(), packageManager: this.packageManager});
 });
 
 When('the husky details are lifted', async function () {
-  this.liftResult = await lift({projectRoot: process.cwd(), packageManager: this.packageManager});
+  this.result = await lift({projectRoot: process.cwd(), packageManager: this.packageManager});
 });
