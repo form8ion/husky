@@ -10,5 +10,5 @@ export default async function ({projectRoot, packageManager}) {
     await createHook({configDirectory, hookName: 'commit-msg', script: 'npx --no-install commitlint --edit $1'});
   }
 
-  return {devDependencies: ['husky'], scripts: {prepare: 'husky install'}};
+  return {devDependencies: ['husky@latest'], scripts: {prepare: 'husky install'}};
 }
