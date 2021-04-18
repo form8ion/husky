@@ -27,7 +27,8 @@ suite('hook creator', () => {
       `#!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-${script}`
+${script}`,
+      {mode: 0o755}
     );
   });
 });
