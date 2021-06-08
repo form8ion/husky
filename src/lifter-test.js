@@ -55,7 +55,7 @@ suite('lifter', () => {
       .resolves({stdout: JSON.stringify({dependencies: {husky: {version: '5.0.0'}}})});
 
     assert.deepEqual(await lift({projectRoot, packageManager}), scaffoldResults);
-    assert.calledWith(fs.writeFile, `${projectRoot}/package.json`, JSON.stringify(originalPackageContents))
+    assert.calledWith(fs.writeFile, `${projectRoot}/package.json`, JSON.stringify(originalPackageContents));
     assert.notCalled(fs.unlink);
   });
 
@@ -72,7 +72,7 @@ suite('lifter', () => {
       .resolves({stdout: JSON.stringify({dependencies: {husky: {version: '5.0.0'}}})});
 
     assert.deepEqual(await lift({projectRoot, packageManager}), scaffoldResults);
-    assert.calledWith(fs.writeFile, `${projectRoot}/package.json`, JSON.stringify(originalPackageContents))
+    assert.calledWith(fs.writeFile, `${projectRoot}/package.json`, JSON.stringify(originalPackageContents));
     assert.notCalled(fs.unlink);
   });
 
