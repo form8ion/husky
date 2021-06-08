@@ -8,6 +8,14 @@ Feature: Husky
     Then husky is configured for "npm"
     And the v4 config is removed
 
+  Scenario: Husky v5 installed, v3 config
+    Given husky v5 is installed
+    And "npm" is the package manager
+    And husky config is in v3 format
+    When the husky details are lifted
+    Then husky is configured for "npm"
+    And the v3 config is removed
+
   Scenario: Husky v5 installed, v5 config
     Given husky v5 is installed
     And husky config is in v5 format

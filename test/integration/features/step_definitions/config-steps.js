@@ -49,8 +49,25 @@ Given('husky config is in v5 format', async function () {
   await makeDir(`${process.cwd()}/.husky`);
 });
 
+Given('husky config is in v3 format', async function () {
+  await fs.writeFile(
+    `${process.cwd()}/package.json`,
+    JSON.stringify({
+      ...this.originalPackageContents,
+      scripts: {...this.originalPackageContents.scripts, precommit: any.string(), commitmsg: any.string()}
+    })
+  );
+});
+
 Then('husky is configured for {string}', async function (packageManager) {
   assert.include(this.result.devDependencies, 'husky@latest');
   assert.equal(this.result.scripts.prepare, 'husky install');
   await assertHookContainsScript('pre-commit', `${packageManager} test`);
+});
+
+Then('the v3 config is removed', async function () {
+  const {scripts} = JSON.parse(await fs.readFile(`${process.cwd()}/package.json`, 'utf-8'));
+
+  assert.isUndefined(scripts.commitmsg);
+  assert.isUndefined(scripts.precommit);
 });

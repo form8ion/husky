@@ -12,16 +12,22 @@ suite('lifter', () => {
   const projectRoot = any.string();
   const scaffoldResults = any.simpleObject();
   const packageManager = any.word();
+  const originalPackageContents = {...any.simpleObject(), scripts: any.simpleObject()};
 
   setup(() => {
     sandbox = sinon.createSandbox();
 
     sandbox.stub(fs, 'unlink');
+    sandbox.stub(fs, 'readFile');
+    sandbox.stub(fs, 'writeFile');
     sandbox.stub(core, 'fileExists');
     sandbox.stub(execa, 'default');
     sandbox.stub(scaffolder, 'default');
 
     scaffolder.default.withArgs({projectRoot, packageManager}).resolves(scaffoldResults);
+    fs.readFile
+      .withArgs(`${projectRoot}/package.json`, 'utf-8')
+      .resolves(JSON.stringify({scripts: any.simpleObject()}));
   });
 
   teardown(() => sandbox.restore());
@@ -34,6 +40,40 @@ suite('lifter', () => {
 
     assert.deepEqual(await lift({projectRoot, packageManager}), scaffoldResults);
     assert.calledWith(fs.unlink, `${projectRoot}/.huskyrc.json`);
+    assert.notCalled(fs.writeFile);
+  });
+
+  test('that husky config is updated when v5 is installed, but a v3 `precommit` hook is defined', async () => {
+    core.fileExists.withArgs(`${projectRoot}/.huskyrc.json`).resolves(false);
+    fs.readFile
+      .withArgs(`${projectRoot}/package.json`, 'utf-8')
+      .resolves(JSON.stringify({
+        ...originalPackageContents, scripts: {...originalPackageContents.scripts, precommit: any.string()}
+      }));
+    execa.default
+      .withArgs('npm', ['ls', 'husky', '--json'])
+      .resolves({stdout: JSON.stringify({dependencies: {husky: {version: '5.0.0'}}})});
+
+    assert.deepEqual(await lift({projectRoot, packageManager}), scaffoldResults);
+    assert.calledWith(fs.writeFile, `${projectRoot}/package.json`, JSON.stringify(originalPackageContents))
+    assert.notCalled(fs.unlink);
+  });
+
+  test('that husky config is updated when v5 is installed, but a v3 `commitmsg` hook is defined', async () => {
+    core.fileExists.withArgs(`${projectRoot}/.huskyrc.json`).resolves(false);
+    fs.readFile
+      .withArgs(`${projectRoot}/package.json`, 'utf-8')
+      .resolves(JSON.stringify({
+        ...originalPackageContents,
+        scripts: {...originalPackageContents.scripts, commitmsg: any.string()}
+      }));
+    execa.default
+      .withArgs('npm', ['ls', 'husky', '--json'])
+      .resolves({stdout: JSON.stringify({dependencies: {husky: {version: '5.0.0'}}})});
+
+    assert.deepEqual(await lift({projectRoot, packageManager}), scaffoldResults);
+    assert.calledWith(fs.writeFile, `${projectRoot}/package.json`, JSON.stringify(originalPackageContents))
+    assert.notCalled(fs.unlink);
   });
 
   test('that husky config is updated when greater than v5 is installed, but config is still for v4', async () => {
@@ -61,6 +101,8 @@ suite('lifter', () => {
     core.fileExists.resolves(false);
 
     assert.deepEqual(await lift({projectRoot, packageManager}), {});
+    assert.notCalled(fs.unlink);
+    assert.notCalled(fs.writeFile);
   });
 
   test('that not having husky installed does not result in an error', async () => {

@@ -2,18 +2,21 @@ import {resolve} from 'path';
 import {After, Before, Given, When} from '@cucumber/cucumber';
 import stubbedFs from 'mock-fs';
 import td from 'testdouble';
+import any from '@travi/any';
 
 let lift, scaffold;
 const stubbedNodeModules = stubbedFs.load(resolve(__dirname, '..', '..', '..', '..', 'node_modules'));
 
 Before(function () {
   this.execa = td.replace('execa');
+  this.originalPackageContents = {...any.simpleObject(), scripts: any.simpleObject()};
 
   // eslint-disable-next-line import/no-extraneous-dependencies,import/no-unresolved
   ({lift, scaffold} = require('@form8ion/husky'));
 
   stubbedFs({
-    node_modules: stubbedNodeModules
+    node_modules: stubbedNodeModules,
+    'package.json': JSON.stringify(this.originalPackageContents)
   });
 });
 
