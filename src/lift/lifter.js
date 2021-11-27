@@ -1,5 +1,5 @@
-import {updateConfigToMatchInstalledVersion} from './update-config';
+import {updateConfigToMatchInstalledVersion} from './config';
 
 export default async function ({projectRoot, packageManager}) {
-  return updateConfigToMatchInstalledVersion(projectRoot, packageManager);
+  return updateConfigToMatchInstalledVersion({projectRoot, packageManager});
 }

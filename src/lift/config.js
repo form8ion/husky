@@ -13,7 +13,7 @@ function legacyConfigExists(v3Exists, v4ConfigExists) {
   return v3Exists || v4ConfigExists;
 }
 
-export async function updateConfigToMatchInstalledVersion(projectRoot, packageManager) {
+export async function updateConfigToMatchInstalledVersion({projectRoot, packageManager}) {
   const packageFilePath = `${projectRoot}/package.json`;
   const packageContents = JSON.parse(await fs.readFile(packageFilePath, 'utf-8'));
   const {precommit, commitmsg, ...otherScripts} = packageContents.scripts;
