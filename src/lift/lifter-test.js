@@ -3,8 +3,8 @@ import * as core from '@form8ion/core';
 import {assert} from 'chai';
 import sinon from 'sinon';
 import any from '@travi/any';
-import * as execa from '../thirdparty-wrappers/execa';
-import * as scaffolder from './scaffolder';
+import * as execa from '../../thirdparty-wrappers/execa';
+import * as scaffolder from '../scaffolder';
 import lift from './lifter';
 
 suite('lifter', () => {
