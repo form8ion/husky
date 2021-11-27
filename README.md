@@ -16,6 +16,13 @@ using [husky](https://typicode.github.io/husky)
   * [Example](#example)
     * [Import](#import)
     * [Execute](#execute)
+  * [API](#api)
+    * [`scaffold`](#scaffold)
+      * [`projectRoot` __string__ (_required_)](#projectroot-string-required)
+      * [`packageManager` __string__ (_required_)](#packagemanager-string-required)
+    * [`lift`](#lift)
+      * [`projectRoot` __string__ (_required_)](#projectroot-string-required-1)
+      * [`packageManager` __string__ (_required_)](#packagemanager-string-required-1)
 * [Contributing](#contributing)
   * [Dependencies](#dependencies)
   * [Verification](#verification)
@@ -53,6 +60,39 @@ import {lift, scaffold} from '@form8ion/husky';
   await lift({projectRoot: process.cwd(), packageManager: 'foo'});
 })();
 ```
+
+### API
+
+#### `scaffold`
+
+Scaffolder for configuring git hooks programatically through the use of [husky](https://github.com/typicode/husky)
+
+Takes a single options object as an argument, containing:
+
+##### `projectRoot` __string__ (_required_)
+
+path to the root of the project
+
+##### `packageManager` __string__ (_required_)
+
+chosen [package manager](https://github.com/form8ion/javascript-core#packagemanagers)
+to be used for the project
+
+#### `lift`
+
+Lifter for adjusting configuration of git hooks programatically through the use
+of [husky](https://github.com/typicode/husky)
+
+Takes a single options object as an argument, containing:
+
+##### `projectRoot` __string__ (_required_)
+
+path to the root of the project
+
+##### `packageManager` __string__ (_required_)
+
+chosen [package manager](https://github.com/form8ion/javascript-core#packagemanagers)
+to be used for the project
 
 ## Contributing
 
