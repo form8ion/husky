@@ -4,7 +4,7 @@ import stubbedFs from 'mock-fs';
 import td from 'testdouble';
 import any from '@travi/any';
 
-let lift, scaffold;
+let lift, scaffold, test;
 const stubbedNodeModules = stubbedFs.load(resolve(__dirname, '..', '..', '..', '..', 'node_modules'));
 
 Before(function () {
@@ -12,7 +12,7 @@ Before(function () {
   this.originalPackageContents = {...any.simpleObject(), scripts: any.simpleObject()};
 
   // eslint-disable-next-line import/no-extraneous-dependencies,import/no-unresolved
-  ({lift, scaffold} = require('@form8ion/husky'));
+  ({lift, scaffold, test} = require('@form8ion/husky'));
 
   stubbedFs({
     node_modules: stubbedNodeModules,
@@ -35,4 +35,8 @@ When('the project is scaffolded', async function () {
 
 When('the husky details are lifted', async function () {
   this.result = await lift({projectRoot: process.cwd(), packageManager: this.packageManager});
+});
+
+When('the predicate is evaluated against a project', async function () {
+  this.result = await test();
 });

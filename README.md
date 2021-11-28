@@ -20,6 +20,7 @@ using [husky](https://typicode.github.io/husky)
     * [`scaffold`](#scaffold)
       * [`projectRoot` __string__ (_required_)](#projectroot-string-required)
       * [`packageManager` __string__ (_required_)](#packagemanager-string-required)
+    * [`test`](#test)
     * [`lift`](#lift)
       * [`projectRoot` __string__ (_required_)](#projectroot-string-required-1)
       * [`packageManager` __string__ (_required_)](#packagemanager-string-required-1)
@@ -48,7 +49,7 @@ $ npm install @form8ion/husky --save
 #### Import
 
 ```javascript
-import {lift, scaffold} from '@form8ion/husky';
+import {lift, scaffold, test} from './lib/index.cjs';
 ```
 
 #### Execute
@@ -56,6 +57,8 @@ import {lift, scaffold} from '@form8ion/husky';
 ```javascript
 (async () => {
   await scaffold({projectRoot: process.cwd(), packageManager: 'foo'});
+
+  await test();
 
   await lift({projectRoot: process.cwd(), packageManager: 'foo'});
 })();
@@ -77,6 +80,13 @@ path to the root of the project
 
 chosen [package manager](https://github.com/form8ion/javascript-core#packagemanagers)
 to be used for the project
+
+#### `test`
+
+Predicate for determining whether the `lift` functionality should be applied to
+the current project.
+Identifies if [husky](https://github.com/typicode/husky) is currently in use
+for the project.
 
 #### `lift`
 

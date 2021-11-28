@@ -1,7 +1,7 @@
 // #### Import
 // remark-usage-ignore-next
 import stubbedFs from 'mock-fs';
-import {lift, scaffold} from './lib/index.cjs';
+import {lift, scaffold, test} from './lib/index.cjs';
 
 // remark-usage-ignore-next
 stubbedFs();
@@ -10,6 +10,8 @@ stubbedFs();
 
 (async () => {
   await scaffold({projectRoot: process.cwd(), packageManager: 'foo'});
+
+  await test();
 
   await lift({projectRoot: process.cwd(), packageManager: 'foo'});
 })();
