@@ -116,29 +116,4 @@ suite('config lifter', () => {
     assert.notCalled(fs.unlink);
     assert.notCalled(fs.writeFile);
   });
-
-  test('that not having husky installed does not result in an error', async () => {
-    const error = new Error('Command failed with exit code 1: npm ls husky --json');
-    error.command = 'npm ls husky --json';
-    execa.default.withArgs('npm', ['ls', 'husky', '--json'])
-      .throws(error);
-    core.fileExists.resolves(any.boolean());
-
-    await updateConfigToMatchInstalledVersion({projectRoot, packageManager});
-  });
-
-  test('that other errors from checking the husky installation are allowed to be thrown', async () => {
-    const message = any.sentence();
-    execa.default.withArgs('npm', ['ls', 'husky', '--json'])
-      .throws(new Error(message));
-    core.fileExists.resolves(any.boolean());
-
-    try {
-      await updateConfigToMatchInstalledVersion({projectRoot, packageManager});
-
-      throw new Error('An error should have been thrown by the check for husky installation details');
-    } catch (e) {
-      assert.equal(e.message, message);
-    }
-  });
 });
