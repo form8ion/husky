@@ -60,5 +60,10 @@ When('the husky details are lifted', async function () {
 });
 
 When('the predicate is evaluated against a project', async function () {
-  this.result = await test();
+  stubbedFs({
+    ...'v5' === this.configFormat && {'.husky': {}},
+    node_modules: stubbedNodeModules
+  });
+
+  this.result = await test({projectRoot: process.cwd()});
 });

@@ -9,12 +9,15 @@ import predicate from './tester';
 
 suite('lift predicate', () => {
   let sandbox;
+  const projectRoot = any.string();
 
   setup(() => {
     sandbox = sinon.createSandbox();
 
     sandbox.stub(execa, 'default');
-    sandbox.stub(core, 'fileExists');
+    sandbox.stub(core, 'directoryExists');
+
+    core.directoryExists.resolves(false);
   });
 
   teardown(() => sandbox.restore());
@@ -23,9 +26,15 @@ suite('lift predicate', () => {
     const error = new Error('Command failed with exit code 1: npm ls husky --json');
     error.command = 'npm ls husky --json';
     execa.default.withArgs('npm', ['ls', 'husky', '--json']).throws(error);
-    core.fileExists.resolves(any.boolean());
 
-    assert.isFalse(await predicate());
+    assert.isFalse(await predicate({projectRoot}));
+  });
+
+  test('that `true` is returned is the modern config directory exists', async () => {
+    core.directoryExists.withArgs(`${projectRoot}/.husky`).resolves(true);
+    execa.default.withArgs('npm', ['ls', 'husky', '--json']).throws(new Error('error from test'));
+
+    assert.isTrue(await predicate({projectRoot}));
   });
 
   test('that `true` is returned when husky is installed in the project', async () => {
@@ -33,16 +42,15 @@ suite('lift predicate', () => {
       .withArgs('npm', ['ls', 'husky', '--json'])
       .resolves({stdout: JSON.stringify({dependencies: {husky: {version: '5.0.0'}}})});
 
-    assert.isTrue(await predicate());
+    assert.isTrue(await predicate({projectRoot}));
   });
 
   test('that other errors from checking the husky installation are allowed to be thrown', async () => {
     const message = any.sentence();
     execa.default.withArgs('npm', ['ls', 'husky', '--json']).throws(new Error(message));
-    core.fileExists.resolves(any.boolean());
 
     try {
-      await predicate();
+      await predicate({projectRoot});
 
       throw new Error('An error should have been thrown by the check for husky installation details');
     } catch (e) {

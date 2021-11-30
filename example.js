@@ -11,7 +11,7 @@ stubbedFs();
 (async () => {
   await scaffold({projectRoot: process.cwd(), packageManager: 'foo'});
 
-  await test();
+  await test({projectRoot: process.cwd()});
 
   await lift({projectRoot: process.cwd(), packageManager: 'foo'});
 })();

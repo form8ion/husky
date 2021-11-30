@@ -19,14 +19,12 @@ export async function assertHookContainsScript(hook, script) {
 }
 
 Given('husky v5 is installed', async function () {
-  td
-    .when(this.execa('npm', ['ls', 'husky', '--json']))
+  td.when(this.execa('npm', ['ls', 'husky', '--json']))
     .thenResolve({stdout: JSON.stringify({dependencies: {husky: {version: '5.0.0'}}})});
 });
 
 Given('husky v4 is installed', async function () {
-  td
-    .when(this.execa('npm', ['ls', 'husky', '--json']))
+  td.when(this.execa('npm', ['ls', 'husky', '--json']))
     .thenResolve({stdout: JSON.stringify({dependencies: {husky: {version: '4.5.6'}}})});
 });
 

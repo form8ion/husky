@@ -58,7 +58,7 @@ import {lift, scaffold, test} from './lib/index.cjs';
 (async () => {
   await scaffold({projectRoot: process.cwd(), packageManager: 'foo'});
 
-  await test();
+  await test({projectRoot: process.cwd()});
 
   await lift({projectRoot: process.cwd(), packageManager: 'foo'});
 })();
@@ -87,6 +87,12 @@ Predicate for determining whether the `lift` functionality should be applied to
 the current project.
 Identifies if [husky](https://github.com/typicode/husky) is currently in use
 for the project.
+
+Takes a single options object as an argument, containing:
+
+##### `projectRoot` __string__ (_required_)
+
+path to the root of the project
 
 #### `lift`
 

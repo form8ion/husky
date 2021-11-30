@@ -10,6 +10,12 @@ Feature: Predicate to determine if the lifter applies to the current project
     When the predicate is evaluated against a project
     Then the predicate resolves to "true"
 
+  Scenario: Husky not yet installed, but Modern config directory exists
+    Given husky is not installed
+    But husky config is in v5 format
+    When the predicate is evaluated against a project
+    Then the predicate resolves to "true"
+
   Scenario: Legacy Config File In Use
     Given husky v4 is installed
     When the predicate is evaluated against a project
