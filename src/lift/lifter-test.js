@@ -3,6 +3,7 @@ import sinon from 'sinon';
 import any from '@travi/any';
 
 import * as config from './config';
+import * as precommit from './pre-commit';
 import lift from './lifter';
 
 suite('lifter', () => {
@@ -14,6 +15,7 @@ suite('lifter', () => {
     sandbox = sinon.createSandbox();
 
     sandbox.stub(config, 'updateConfigToMatchInstalledVersion');
+    sandbox.stub(precommit, 'default');
   });
 
   teardown(() => sandbox.restore());
@@ -23,5 +25,7 @@ suite('lifter', () => {
     config.updateConfigToMatchInstalledVersion.withArgs({projectRoot, packageManager}).resolves(configFormatResults);
 
     assert.equal(await lift({projectRoot, packageManager}), configFormatResults);
+
+    assert.calledWith(precommit.default, {projectRoot});
   });
 });

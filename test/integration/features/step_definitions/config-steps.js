@@ -2,8 +2,6 @@ import {promises as fs} from 'fs';
 import {Given, Then} from '@cucumber/cucumber';
 import {assert} from 'chai';
 import td from 'testdouble';
-import any from '@travi/any';
-import makeDir from '../../../../thirdparty-wrappers/make-dir';
 
 export async function assertHookContainsScript(hook, script) {
   const pathToHookFile = `${process.cwd()}/.husky/${hook}`;
@@ -42,21 +40,15 @@ Given('husky is not installed', async function () {
 });
 
 Given('husky config is in v4 format', async function () {
-  await fs.writeFile(`${process.cwd()}/.huskyrc.json`, JSON.stringify(any.simpleObject()));
+  this.configFormat = 'v4';
 });
 
 Given('husky config is in v5 format', async function () {
-  await makeDir(`${process.cwd()}/.husky`);
+  this.configFormat = 'v5';
 });
 
 Given('husky config is in v3 format', async function () {
-  await fs.writeFile(
-    `${process.cwd()}/package.json`,
-    JSON.stringify({
-      ...this.originalPackageContents,
-      scripts: {...this.originalPackageContents.scripts, precommit: any.string(), commitmsg: any.string()}
-    })
-  );
+  this.configFormat = 'v3';
 });
 
 Then('husky is configured for {string}', async function (packageManager) {

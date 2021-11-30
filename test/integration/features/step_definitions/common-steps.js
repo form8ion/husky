@@ -13,11 +13,6 @@ Before(function () {
 
   // eslint-disable-next-line import/no-extraneous-dependencies,import/no-unresolved
   ({lift, scaffold, test} = require('@form8ion/husky'));
-
-  stubbedFs({
-    node_modules: stubbedNodeModules,
-    'package.json': JSON.stringify(this.originalPackageContents)
-  });
 });
 
 After(function () {
@@ -30,10 +25,37 @@ Given('{string} is the package manager', async function (packageManager) {
 });
 
 When('the project is scaffolded', async function () {
+  stubbedFs({
+    node_modules: stubbedNodeModules,
+    ...'v5' === this.configFormat && {'.husky': {}},
+    ...'v4' === this.configFormat && {'.huskyrc.json': JSON.stringify(any.simpleObject())},
+    'package.json': JSON.stringify({
+      ...this.originalPackageContents,
+      scripts: {
+        ...this.originalPackageContents.scripts,
+        ...'v3' === this.configFormat && {precommit: any.string(), commitmsg: any.string()}
+      }
+    })
+  });
+
   this.result = await scaffold({projectRoot: process.cwd(), packageManager: this.packageManager});
 });
 
 When('the husky details are lifted', async function () {
+  stubbedFs({
+    node_modules: stubbedNodeModules,
+    ...'v5' === this.configFormat && {'.husky': {}},
+    ...'v4' === this.configFormat && {'.huskyrc.json': JSON.stringify(any.simpleObject())},
+    ...this.commitlintConfigContents && {'.commitlintrc.js': this.commitlintConfigContents},
+    'package.json': JSON.stringify({
+      ...this.originalPackageContents,
+      scripts: {
+        ...this.originalPackageContents.scripts,
+        ...'v3' === this.configFormat && {precommit: any.string(), commitmsg: any.string()}
+      }
+    })
+  });
+
   this.result = await lift({projectRoot: process.cwd(), packageManager: this.packageManager});
 });
 

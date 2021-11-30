@@ -1,8 +1,9 @@
-import {promises as fs} from 'fs';
+import {fileExists} from '@form8ion/core';
+
 import {Given, Then} from '@cucumber/cucumber';
 import {assert} from 'chai';
 import any from '@travi/any';
-import {fileExists} from '@form8ion/core';
+
 import {assertHookContainsScript} from './config-steps';
 
 Given('no commit convention is defined', async function () {
@@ -10,7 +11,7 @@ Given('no commit convention is defined', async function () {
 });
 
 Given('commitlint is configured for the project', async function () {
-  await fs.writeFile(`${process.cwd()}/.commitlintrc.js`, any.string());
+  this.commitlintConfigContents = any.string();
 });
 
 Then('no commit-msg hook is defined', async function () {
