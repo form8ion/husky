@@ -26,6 +26,7 @@ suite('config lifter', () => {
     sandbox.stub(fs, 'readFile');
     sandbox.stub(fs, 'writeFile');
     sandbox.stub(core, 'fileExists');
+    sandbox.stub(core, 'directoryExists');
     sandbox.stub(execa, 'default');
     sandbox.stub(scaffolder, 'default');
 
@@ -33,6 +34,7 @@ suite('config lifter', () => {
     fs.readFile
       .withArgs(`${projectRoot}/package.json`, 'utf-8')
       .resolves(JSON.stringify({scripts: any.simpleObject()}));
+    core.directoryExists.resolves(false);
   });
 
   teardown(() => sandbox.restore());
@@ -106,13 +108,12 @@ suite('config lifter', () => {
     assert.deepEqual(await updateConfigToMatchInstalledVersion({projectRoot, packageManager}), {});
   });
 
-  test('that no next-step is listed when v5 is installed and v5 config exists', async () => {
-    execa.default
-      .withArgs('npm', ['ls', 'husky', '--json'])
-      .resolves({stdout: JSON.stringify({dependencies: {husky: {version: '5.6.7'}}})});
+  test('that no next-step is listed when v5 config exists', async () => {
     core.fileExists.resolves(false);
+    core.directoryExists.withArgs(`${projectRoot}/.husky`).resolves(true);
 
     assert.deepEqual(await updateConfigToMatchInstalledVersion({projectRoot, packageManager}), {});
+    assert.notCalled(execa.default);
     assert.notCalled(fs.unlink);
     assert.notCalled(fs.writeFile);
   });

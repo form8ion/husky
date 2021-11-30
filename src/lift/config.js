@@ -1,7 +1,7 @@
 import {promises as fs} from 'fs';
 import semver from 'semver';
 import {info} from '@travi/cli-messages';
-import {fileExists} from '@form8ion/core';
+import {directoryExists, fileExists} from '@form8ion/core';
 import execa from '../../thirdparty-wrappers/execa';
 import scaffold from '../scaffolder';
 
@@ -14,6 +14,8 @@ function legacyConfigExists(v3Exists, v4ConfigExists) {
 }
 
 async function configFormatShouldBeUpdated(projectRoot, v3Exists, huskyV4ConfigExists) {
+  if (await directoryExists(`${projectRoot}/.husky`)) return false;
+
   const {stdout: huskyVersionDetails} = await execa('npm', ['ls', 'husky', '--json']);
 
   const {dependencies} = JSON.parse(huskyVersionDetails);
