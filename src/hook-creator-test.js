@@ -23,7 +23,8 @@ suite('hook creator', () => {
     await createHook({configDirectory, hookName, script});
 
     assert.calledWith(
-      fs.writeFile, `${configDirectory}/${hookName}`,
+      fs.writeFile,
+      `${configDirectory}/${hookName}`,
       `#!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
