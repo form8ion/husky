@@ -3,7 +3,7 @@ import sinon from 'sinon';
 import any from '@travi/any';
 
 import * as config from './config';
-import * as precommit from './pre-commit';
+import * as precommit from './commit-msg';
 import lift from './lifter';
 
 suite('lifter', () => {

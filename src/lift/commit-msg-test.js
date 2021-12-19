@@ -5,7 +5,7 @@ import any from '@travi/any';
 import sinon from 'sinon';
 
 import * as hookCreator from '../hook-creator';
-import precommit from './pre-commit';
+import commitMsg from './commit-msg';
 
 suite('pre-commit', () => {
   let sandbox;
@@ -26,7 +26,7 @@ suite('pre-commit', () => {
     core.fileExists.withArgs(`${projectRoot}/.commitlintrc.js`).resolves(true);
     core.fileExists.withArgs(`${configDirectory}/${hookName}`).resolves(false);
 
-    await precommit({projectRoot});
+    await commitMsg({projectRoot});
 
     assert.calledWith(
       hookCreator.default,
@@ -38,7 +38,7 @@ suite('pre-commit', () => {
     core.fileExists.withArgs(`${projectRoot}/.commitlintrc.js`).resolves(false);
     core.fileExists.withArgs(`${configDirectory}/${hookName}`).resolves(false);
 
-    await precommit({projectRoot});
+    await commitMsg({projectRoot});
 
     assert.neverCalledWith(
       hookCreator.default,
@@ -50,7 +50,7 @@ suite('pre-commit', () => {
     core.fileExists.withArgs(`${projectRoot}/.commitlintrc.js`).resolves(true);
     core.fileExists.withArgs(`${configDirectory}/${hookName}`).resolves(true);
 
-    await precommit({projectRoot});
+    await commitMsg({projectRoot});
 
     assert.neverCalledWith(
       hookCreator.default,

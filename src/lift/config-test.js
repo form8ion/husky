@@ -50,7 +50,7 @@ suite('config lifter', () => {
     assert.notCalled(fs.writeFile);
   });
 
-  test('that husky config is updated when v5 is installed, but a v3 `precommit` hook is defined', async () => {
+  test('that husky config is updated when v5 is installed, but a v3 `commitMsg` hook is defined', async () => {
     core.fileExists.withArgs(`${projectRoot}/.huskyrc.json`).resolves(false);
     fs.readFile
       .withArgs(`${projectRoot}/package.json`, 'utf-8')
