@@ -38,7 +38,11 @@ When('the project is scaffolded', async function () {
     })
   });
 
-  this.result = await scaffold({projectRoot: process.cwd(), packageManager: this.packageManager});
+  this.result = await scaffold({
+    projectRoot: process.cwd(),
+    packageManager: this.packageManager,
+    pathWithinParent: this.pathWithinParent
+  });
 });
 
 When('the husky details are lifted', async function () {

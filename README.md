@@ -81,6 +81,10 @@ path to the root of the project
 chosen [package manager](https://github.com/form8ion/javascript-core#packagemanagers)
 to be used for the project
 
+##### `pathWithinParent` __string__ (_optional_)
+
+path within a parent project when scaffolding a sub-project
+
 #### `test`
 
 Predicate for determining whether the `lift` functionality should be applied to
