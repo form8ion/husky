@@ -8,7 +8,7 @@ let lift, scaffold, test;
 const stubbedNodeModules = stubbedFs.load(resolve(__dirname, '..', '..', '..', '..', 'node_modules'));
 
 Before(function () {
-  this.execa = td.replace('execa');
+  this.execa = td.replace('@form8ion/execa-wrapper');
   this.originalPackageContents = {...any.simpleObject(), scripts: any.simpleObject()};
 
   // eslint-disable-next-line import/no-extraneous-dependencies,import/no-unresolved
