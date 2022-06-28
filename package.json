@@ -3,6 +3,9 @@
   "description": "opinionated scaffolder for configuring Git hooks using husky",
   "license": "MIT",
   "version": "0.0.0-semantically-released",
+  "engines": {
+    "node": "^14.15 || >=16"
+  },
   "files": [
     "example.js",
     "lib/"
@@ -11,8 +14,12 @@
     "access": "public"
   },
   "runkitExampleFilename": "./example.js",
-  "main": "lib/index.cjs.js",
-  "module": "lib/index.es.js",
+  "main": "./lib/index.js",
+  "module": "./lib/index.mjs",
+  "exports": {
+    "require": "./lib/index.js",
+    "import": "./lib/index.mjs"
+  },
   "sideEffects": false,
   "repository": "form8ion/husky",
   "bugs": "https://github.com/form8ion/husky/issues",
@@ -44,7 +51,8 @@
     "test:unit": "cross-env NODE_ENV=test c8 run-s test:unit:base",
     "test:unit:base": "DEBUG=any mocha 'src/**/*-test.js'",
     "lint:peer": "npm ls >/dev/null",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint:engines": "ls-engines"
   },
   "devDependencies": {
     "@babel/register": "7.17.7",
@@ -65,6 +73,7 @@
     "gherkin-lint": "4.2.2",
     "husky": "8.0.1",
     "lockfile-lint": "4.7.5",
+    "ls-engines": "0.7.0",
     "mocha": "10.0.0",
     "mock-fs": "5.1.2",
     "npm-run-all": "4.1.5",
