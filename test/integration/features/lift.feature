@@ -26,6 +26,7 @@ Feature: Husky
 
   Scenario: Husky v4 installed, v4 config
     Given husky v4 is installed
+    And commitlint is configured for the project
     And husky config is in v4 format
     When the husky details are lifted
     Then the next-steps do not include a warning about the husky config

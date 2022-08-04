@@ -1,12 +1,15 @@
 import {promises as fs} from 'fs';
+import {directoryExists} from '@form8ion/core';
 
 export default async function ({configDirectory, hookName, script}) {
-  await fs.writeFile(
-    `${configDirectory}/${hookName}`,
-    `#!/bin/sh
+  if (await directoryExists(configDirectory)) {
+    await fs.writeFile(
+      `${configDirectory}/${hookName}`,
+      `#!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
 ${script}`,
-    {mode: 0o755}
-  );
+      {mode: 0o755}
+    );
+  }
 }
