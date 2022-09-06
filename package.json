@@ -6,25 +6,18 @@
   "engines": {
     "node": "^14.15 || >=16"
   },
-  "files": [
-    "example.js",
-    "lib/"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
+  "author": "Matt Travi <npm@travi.org> (https://matt.travi.org)",
+  "repository": "form8ion/husky",
+  "bugs": "https://github.com/form8ion/husky/issues",
+  "homepage": "https://npm.im/@form8ion/husky",
   "runkitExampleFilename": "./example.js",
-  "main": "./lib/index.js",
-  "module": "./lib/index.mjs",
   "exports": {
     "require": "./lib/index.js",
     "import": "./lib/index.mjs"
   },
+  "main": "./lib/index.js",
+  "module": "./lib/index.mjs",
   "sideEffects": false,
-  "repository": "form8ion/husky",
-  "bugs": "https://github.com/form8ion/husky/issues",
-  "homepage": "https://npm.im/@form8ion/husky",
-  "author": "Matt Travi <npm@travi.org> (https://matt.travi.org)",
   "scripts": {
     "test": "npm-run-all --print-label build --parallel lint:* --parallel test:*",
     "lint:lockfile": "lockfile-lint",
@@ -53,6 +46,20 @@
     "lint:peer": "npm ls >/dev/null",
     "prepare": "husky install",
     "lint:engines": "ls-engines"
+  },
+  "files": [
+    "example.js",
+    "lib/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@form8ion/core": "^1.4.2",
+    "@form8ion/execa-wrapper": "^1.0.0-alpha.1",
+    "@travi/cli-messages": "^1.0.5",
+    "make-dir": "^3.1.0",
+    "semver": "^7.3.5"
   },
   "devDependencies": {
     "@babel/register": "7.18.9",
@@ -85,12 +92,5 @@
     "rollup-plugin-auto-external": "2.0.0",
     "sinon": "14.0.0",
     "testdouble": "3.16.6"
-  },
-  "dependencies": {
-    "@form8ion/core": "^1.4.2",
-    "@form8ion/execa-wrapper": "^1.0.0-alpha.1",
-    "@travi/cli-messages": "^1.0.5",
-    "make-dir": "^3.1.0",
-    "semver": "^7.3.5"
   }
 }
