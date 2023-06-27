@@ -50,7 +50,7 @@ When('the husky details are lifted', async function () {
     node_modules: stubbedNodeModules,
     ...'v5' === this.configFormat && {'.husky': {}},
     ...'v4' === this.configFormat && {'.huskyrc.json': JSON.stringify(any.simpleObject())},
-    ...this.commitlintConfigContents && {'.commitlintrc.js': this.commitlintConfigContents},
+    ...this.commitlintConfigContents && {'.commitlintrc.json': this.commitlintConfigContents},
     'package.json': JSON.stringify({
       ...this.originalPackageContents,
       scripts: {

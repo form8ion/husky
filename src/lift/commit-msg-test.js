@@ -22,8 +22,20 @@ suite('pre-commit', () => {
 
   teardown(() => sandbox.restore());
 
-  test('that a `commit-msg` hook is added if commitlint configuration exists', async () => {
+  test('that a `commit-msg` hook is added if legacy commitlint configuration exists', async () => {
     core.fileExists.withArgs(`${projectRoot}/.commitlintrc.js`).resolves(true);
+    core.fileExists.withArgs(`${configDirectory}/${hookName}`).resolves(false);
+
+    await commitMsg({projectRoot});
+
+    assert.calledWith(
+      hookCreator.default,
+      {configDirectory, hookName, script: 'npx --no-install commitlint --edit $1'}
+    );
+  });
+
+  test('that a `commit-msg` hook is added if modern commitlint configuration exists', async () => {
+    core.fileExists.withArgs(`${projectRoot}/.commitlintrc.json`).resolves(true);
     core.fileExists.withArgs(`${configDirectory}/${hookName}`).resolves(false);
 
     await commitMsg({projectRoot});
@@ -36,6 +48,7 @@ suite('pre-commit', () => {
 
   test('that a `commit-msg` hook is not added if commitlint is not configured', async () => {
     core.fileExists.withArgs(`${projectRoot}/.commitlintrc.js`).resolves(false);
+    core.fileExists.withArgs(`${projectRoot}/.commitlintrc.json`).resolves(false);
     core.fileExists.withArgs(`${configDirectory}/${hookName}`).resolves(false);
 
     await commitMsg({projectRoot});
