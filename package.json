@@ -55,7 +55,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@form8ion/core": "^2.0.0",
+    "@form8ion/core": "^3.0.0",
     "@form8ion/execa-wrapper": "^1.0.0-alpha.1",
     "@travi/cli-messages": "^1.0.5",
     "make-dir": "^4.0.0",
