@@ -1,5 +1,5 @@
-import {promises as fs} from 'fs';
-import * as core from '@form8ion/core';
+import {promises as fs} from 'node:fs';
+import core from '@form8ion/core';
 
 import sinon from 'sinon';
 import {assert} from 'chai';
