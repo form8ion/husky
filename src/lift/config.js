@@ -1,4 +1,4 @@
-import {promises as fs} from 'fs';
+import {promises as fs} from 'node:fs';
 import semver from 'semver';
 import {info} from '@travi/cli-messages';
 import {directoryExists, fileExists} from '@form8ion/core';
