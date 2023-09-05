@@ -3,12 +3,17 @@ import {fileExists} from '@form8ion/core';
 import createHook from '../hook-creator';
 
 async function commitlintConfigExists(projectRoot) {
-  const [legacyCommitlintConfigExists, modernCommitlintConfigExists] = await Promise.all([
+  const [
+    modernCommitlintConfigExists,
+    legacyCommitlintConfigExists,
+    commonJsCommitlintConfigExists
+  ] = await Promise.all([
+    fileExists(`${projectRoot}/.commitlintrc.json`),
     fileExists(`${projectRoot}/.commitlintrc.js`),
-    fileExists(`${projectRoot}/.commitlintrc.json`)
+    fileExists(`${projectRoot}/.commitlintrc.cjs`)
   ]);
 
-  return legacyCommitlintConfigExists || modernCommitlintConfigExists;
+  return legacyCommitlintConfigExists || modernCommitlintConfigExists || commonJsCommitlintConfigExists;
 }
 
 async function commitMsgHookNotAlreadyDefined(configDirectory) {

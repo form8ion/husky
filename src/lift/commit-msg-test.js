@@ -46,6 +46,18 @@ suite('pre-commit', () => {
     );
   });
 
+  test('that a `commit-msg` hook is added if common-js commitlint configuration exists', async () => {
+    core.fileExists.withArgs(`${projectRoot}/.commitlintrc.cjs`).resolves(true);
+    core.fileExists.withArgs(`${configDirectory}/${hookName}`).resolves(false);
+
+    await commitMsg({projectRoot});
+
+    assert.calledWith(
+      hookCreator.default,
+      {configDirectory, hookName, script: 'npx --no-install commitlint --edit $1'}
+    );
+  });
+
   test('that a `commit-msg` hook is not added if commitlint is not configured', async () => {
     core.fileExists.withArgs(`${projectRoot}/.commitlintrc.js`).resolves(false);
     core.fileExists.withArgs(`${projectRoot}/.commitlintrc.json`).resolves(false);
