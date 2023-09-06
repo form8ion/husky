@@ -6,6 +6,7 @@ using [husky](https://typicode.github.io/husky)
 <!--status-badges start -->
 
 [![Node CI Workflow Status][github-actions-ci-badge]][github-actions-ci-link]
+![SLSA Level 2][slsa-badge]
 
 <!--status-badges end -->
 
@@ -177,3 +178,5 @@ $ npm test
 [runkit-badge]: https://badge.runkitcdn.com/@form8ion/husky.svg
 
 [node-badge]: https://img.shields.io/node/v/@form8ion/husky?logo=node.js
+
+[slsa-badge]: https://slsa.dev/images/gh-badge-level2.svg
