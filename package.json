@@ -94,6 +94,6 @@
     "rollup": "3.29.2",
     "rollup-plugin-auto-external": "2.0.0",
     "sinon": "16.0.0",
-    "testdouble": "3.18.0"
+    "testdouble": "3.19.0"
   }
 }
