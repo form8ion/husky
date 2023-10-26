@@ -1,5 +1,5 @@
-import makeDir from '../thirdparty-wrappers/make-dir';
-import createHook from './hook-creator';
+import makeDir from '../thirdparty-wrappers/make-dir.js';
+import createHook from './hook-creator.js';
 
 export default async function ({projectRoot, packageManager, pathWithinParent}) {
   if (pathWithinParent) return {};

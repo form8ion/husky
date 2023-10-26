@@ -1,5 +1,5 @@
-import {updateConfigToMatchInstalledVersion} from './config';
-import configureCommitMsgHook from './commit-msg';
+import {updateConfigToMatchInstalledVersion} from './config.js';
+import configureCommitMsgHook from './commit-msg.js';
 
 export default async function ({projectRoot, packageManager}) {
   const configFormatResults = await updateConfigToMatchInstalledVersion({projectRoot, packageManager});

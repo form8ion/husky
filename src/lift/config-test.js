@@ -5,9 +5,9 @@ import {assert} from 'chai';
 import sinon from 'sinon';
 import any from '@travi/any';
 
-import * as execa from '../../thirdparty-wrappers/execa';
-import * as scaffolder from '../scaffolder';
-import {updateConfigToMatchInstalledVersion} from './config';
+import * as execa from '../../thirdparty-wrappers/execa.js';
+import * as scaffolder from '../scaffolder.js';
+import {updateConfigToMatchInstalledVersion} from './config.js';
 
 suite('config lifter', () => {
   let sandbox;

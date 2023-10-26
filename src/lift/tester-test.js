@@ -4,8 +4,8 @@ import {assert} from 'chai';
 import sinon from 'sinon';
 import any from '@travi/any';
 
-import * as execa from '../../thirdparty-wrappers/execa';
-import predicate from './tester';
+import * as execa from '../../thirdparty-wrappers/execa.js';
+import predicate from './tester.js';
 
 suite('lift predicate', () => {
   let sandbox;

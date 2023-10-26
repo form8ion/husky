@@ -1,7 +1,7 @@
 import {warn} from '@travi/cli-messages';
 import {directoryExists} from '@form8ion/core';
 
-import execa from '../../thirdparty-wrappers/execa';
+import execa from '../../thirdparty-wrappers/execa.js';
 
 export default async function ({projectRoot}) {
   if (await directoryExists(`${projectRoot}/.husky`)) return true;

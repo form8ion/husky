@@ -2,8 +2,9 @@ import {promises as fs} from 'node:fs';
 import semver from 'semver';
 import {info} from '@travi/cli-messages';
 import {directoryExists, fileExists} from '@form8ion/core';
-import execa from '../../thirdparty-wrappers/execa';
-import scaffold from '../scaffolder';
+
+import execa from '../../thirdparty-wrappers/execa.js';
+import scaffold from '../scaffolder.js';
 
 function v3ConfigExists(precommit, commitmsg) {
   return precommit || commitmsg;
