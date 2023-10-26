@@ -4,8 +4,8 @@ import {assert} from 'chai';
 import any from '@travi/any';
 import sinon from 'sinon';
 
-import * as hookCreator from '../hook-creator';
-import commitMsg from './commit-msg';
+import * as hookCreator from '../hook-creator.js';
+import commitMsg from './commit-msg.js';
 
 suite('pre-commit', () => {
   let sandbox;

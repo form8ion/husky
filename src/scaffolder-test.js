@@ -2,9 +2,9 @@ import {assert} from 'chai';
 import sinon from 'sinon';
 import any from '@travi/any';
 
-import * as mkdir from '../thirdparty-wrappers/make-dir';
-import * as hookCreator from './hook-creator';
-import scaffold from './scaffolder';
+import * as mkdir from '../thirdparty-wrappers/make-dir.js';
+import * as hookCreator from './hook-creator.js';
+import scaffold from './scaffolder.js';
 
 suite('scaffolder', () => {
   let sandbox;

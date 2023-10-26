@@ -2,9 +2,9 @@ import {assert} from 'chai';
 import sinon from 'sinon';
 import any from '@travi/any';
 
-import * as config from './config';
-import * as precommit from './commit-msg';
-import lift from './lifter';
+import * as config from './config.js';
+import * as precommit from './commit-msg.js';
+import lift from './lifter.js';
 
 suite('lifter', () => {
   let sandbox;

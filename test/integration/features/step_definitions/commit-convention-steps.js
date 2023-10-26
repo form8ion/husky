@@ -4,7 +4,7 @@ import {Given, Then} from '@cucumber/cucumber';
 import {assert} from 'chai';
 import any from '@travi/any';
 
-import {assertHookContainsScript} from './config-steps';
+import {assertHookContainsScript} from './config-steps.js';
 
 Given('no commit convention is defined', async function () {
   return undefined;

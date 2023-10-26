@@ -1,6 +1,6 @@
 import {fileExists} from '@form8ion/core';
 
-import createHook from '../hook-creator';
+import createHook from '../hook-creator.js';
 
 /**
   this duplicates
