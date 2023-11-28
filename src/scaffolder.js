@@ -1,11 +1,10 @@
+import {info} from '@travi/cli-messages';
+
 import makeDir from '../thirdparty-wrappers/make-dir.js';
 import createHook from './hook-creator.js';
-import {info} from '@travi/cli-messages';
 
 async function createPreCommitHook(projectRoot, packageManager) {
   const configDirectory = await makeDir(`${projectRoot}/.husky`);
-
-  info('Defining pre-commit hook', {level: 'secondary'});
 
   await createHook({configDirectory, hookName: 'pre-commit', script: `${packageManager} test`});
 }

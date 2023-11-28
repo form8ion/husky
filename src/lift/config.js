@@ -59,6 +59,8 @@ export async function updateConfigToMatchInstalledVersion({projectRoot, packageM
   const huskyV4ConfigExists = await fileExists(`${projectRoot}/.huskyrc.json`);
 
   if (await configFormatShouldBeUpdated(projectRoot, v3Exists, huskyV4ConfigExists)) {
+    info('Updating Husky config format', {level: 'secondary'});
+
     return updateOutdatedConfigFormat(
       projectRoot,
       packageManager,
