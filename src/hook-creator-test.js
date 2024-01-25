@@ -27,15 +27,7 @@ suite('hook creator', () => {
 
     await createHook({configDirectory, hookName, script});
 
-    assert.calledWith(
-      fs.writeFile,
-      `${configDirectory}/${hookName}`,
-      `#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
-${script}`,
-      {mode: 0o755}
-    );
+    assert.calledWith(fs.writeFile, `${configDirectory}/${hookName}`, script, {mode: 0o755});
   });
 
   test('that the hook file is not created if the config directory does not exist', async () => {

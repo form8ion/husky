@@ -27,7 +27,7 @@ suite('scaffolder', () => {
     const {devDependencies, scripts} = await scaffold({projectRoot, packageManager});
 
     assert.deepEqual(devDependencies, ['husky@latest']);
-    assert.equal(scripts.prepare, 'husky install');
+    assert.equal(scripts.prepare, 'husky');
     assert.calledWith(hookCreator.default, {configDirectory, hookName: 'pre-commit', script: `${packageManager} test`});
   });
 
