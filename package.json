@@ -64,7 +64,7 @@
     "semver": "^7.3.5"
   },
   "devDependencies": {
-    "@babel/register": "7.25.7",
+    "@babel/register": "7.25.9",
     "@cucumber/cucumber": "9.6.0",
     "@form8ion/babel-preset": "1.6.137",
     "@form8ion/commitlint-config": "2.0.0",
