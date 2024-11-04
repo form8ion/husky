@@ -12,5 +12,7 @@ export default async function ({projectRoot, name}) {
     ''
   );
 
-  return writeHookFile({projectRoot, name, script: contentsWithDeprecatedLinesRemoved});
+  if (hookContents !== contentsWithDeprecatedLinesRemoved) {
+    await writeHookFile({projectRoot, name, script: contentsWithDeprecatedLinesRemoved});
+  }
 }

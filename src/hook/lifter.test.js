@@ -9,18 +9,27 @@ import liftHook from './lifter.js';
 vi.mock('./reader.js');
 vi.mock('./writer.js');
 describe('hook script lifter', () => {
+  const projectRoot = any.string();
+  const name = any.word();
+  const hookContents = any.string();
+
   it('should lift a hook script', async () => {
-    const projectRoot = any.string();
-    const name = any.word();
     const deprecatedLines = `#!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
 `;
-    const hookContents = any.string();
     when(readHookFile).calledWith({projectRoot, name}).mockResolvedValue(`${deprecatedLines}${hookContents}`);
 
     await liftHook({projectRoot, name});
 
     expect(writeHookFile).toHaveBeenCalledWith({projectRoot, name, script: hookContents});
+  });
+
+  it('should not write the file if the contents are unchanged', async () => {
+    when(readHookFile).calledWith({projectRoot, name}).mockResolvedValue(hookContents);
+
+    await liftHook({projectRoot, name});
+
+    expect(writeHookFile).not.toHaveBeenCalled();
   });
 });
