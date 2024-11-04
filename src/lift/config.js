@@ -4,7 +4,7 @@ import {info} from '@travi/cli-messages';
 import {directoryExists, fileExists} from '@form8ion/core';
 
 import execa from '../../thirdparty-wrappers/execa.js';
-import scaffold from '../scaffolder.js';
+import scaffold from '../scaffold/scaffolder.js';
 
 function v3ConfigExists(precommit, commitmsg) {
   return precommit || commitmsg;

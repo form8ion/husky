@@ -1,2 +1,2 @@
-export {default as scaffold} from './scaffolder.js';
+export * from './scaffold/index.js';
 export * from './lift/index.js';

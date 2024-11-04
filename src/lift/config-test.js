@@ -6,7 +6,7 @@ import sinon from 'sinon';
 import any from '@travi/any';
 
 import * as execa from '../../thirdparty-wrappers/execa.js';
-import * as scaffolder from '../scaffolder.js';
+import * as scaffolder from '../scaffold/scaffolder.js';
 import {updateConfigToMatchInstalledVersion} from './config.js';
 
 suite('config lifter', () => {
