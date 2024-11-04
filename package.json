@@ -42,7 +42,9 @@
     "watch": "run-s 'build:js -- --watch'",
     "prepack": "run-s build",
     "test:unit": "cross-env NODE_ENV=test c8 run-s test:unit:base",
-    "test:unit:base": "DEBUG=any mocha 'src/**/*-test.js'",
+    "test:unit:base": "npm-run-all --print-label --parallel test:unit:mocha test:unit:vitest",
+    "test:unit:vitest": "DEBUG=any vitest run",
+    "test:unit:mocha": "DEBUG=any mocha 'src/**/*-test.js'",
     "lint:peer": "npm ls >/dev/null",
     "prepare": "husky install",
     "lint:engines": "ls-engines",
@@ -81,6 +83,7 @@
     "cz-conventional-changelog": "3.3.0",
     "gherkin-lint": "4.2.4",
     "husky": "9.1.6",
+    "jest-when": "3.6.0",
     "lockfile-lint": "4.14.0",
     "ls-engines": "0.9.3",
     "mocha": "10.8.2",
@@ -94,6 +97,7 @@
     "rollup": "4.24.4",
     "rollup-plugin-auto-external": "2.0.0",
     "sinon": "19.0.2",
-    "testdouble": "3.20.2"
+    "testdouble": "3.20.2",
+    "vitest": "2.1.4"
   }
 }
