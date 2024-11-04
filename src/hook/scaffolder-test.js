@@ -5,7 +5,7 @@ import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
 
-import createHook from './hook-creator.js';
+import createHook from './scaffolder.js';
 
 suite('hook creator', () => {
   let sandbox;

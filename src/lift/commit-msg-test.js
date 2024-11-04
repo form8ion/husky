@@ -4,7 +4,7 @@ import {assert} from 'chai';
 import any from '@travi/any';
 import sinon from 'sinon';
 
-import * as hookCreator from '../hook-creator.js';
+import * as hookCreator from '../hook/scaffolder.js';
 import commitMsg from './commit-msg.js';
 
 suite('pre-commit', () => {

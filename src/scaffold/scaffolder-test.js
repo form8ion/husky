@@ -3,7 +3,7 @@ import sinon from 'sinon';
 import any from '@travi/any';
 
 import * as mkdir from '../../thirdparty-wrappers/make-dir.js';
-import * as hookCreator from '../hook-creator.js';
+import * as hookCreator from '../hook/scaffolder.js';
 import scaffold from './scaffolder.js';
 
 suite('scaffolder', () => {
