@@ -6,7 +6,7 @@ Feature: Husky
     And "npm" is the package manager
     And husky config is in v4 format
     When the husky details are lifted
-    Then husky is configured for "npm"
+    Then husky v5 is configured for "npm"
     And the v4 config is removed
     And commitlint is configured as a commit-msg hook
 
@@ -30,3 +30,10 @@ Feature: Husky
     And husky config is in v4 format
     When the husky details are lifted
     Then the next-steps do not include a warning about the husky config
+
+  Scenario: Husky v9 installed, v8 config
+    Given husky v9 is installed
+    And husky config is in v8 format
+    And "npm" is the package manager
+    When the husky details are lifted
+    Then the shebang is removed from hook scripts

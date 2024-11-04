@@ -48,6 +48,18 @@ When('the project is scaffolded', async function () {
 When('the husky details are lifted', async function () {
   stubbedFs({
     node_modules: stubbedNodeModules,
+    ...'v8' === this.configFormat && {
+      '.husky': {
+        'commit-msg': `#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+npx --no-install commitlint --edit $1`,
+        'pre-commit': `#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+npm test`
+      }
+    },
     ...'v5' === this.configFormat && {'.husky': {}},
     ...'v4' === this.configFormat && {'.huskyrc.json': JSON.stringify(any.simpleObject())},
     ...this.commitlintConfigContents && {'.commitlintrc.json': this.commitlintConfigContents},
