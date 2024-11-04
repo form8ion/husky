@@ -1,11 +1,12 @@
-import {promises as fs} from 'node:fs';
 import {directoryExists} from '@form8ion/core';
 import {info} from '@travi/cli-messages';
 
-export default async function ({configDirectory, hookName, script}) {
-  if (await directoryExists(configDirectory)) {
+import writeHookFile from './writer.js';
+
+export default async function ({projectRoot, hookName, script}) {
+  if (await directoryExists(`${projectRoot}/.husky`)) {
     info(`Defining ${hookName} hook`, {level: 'secondary'});
 
-    await fs.writeFile(`${configDirectory}/${hookName}`, script, {mode: 0o755});
+    await writeHookFile({projectRoot, name: hookName, script});
   }
 }

@@ -30,7 +30,7 @@ suite('pre-commit', () => {
 
     assert.calledWith(
       hookCreator.default,
-      {configDirectory, hookName, script: 'npx --no-install commitlint --edit $1'}
+      {projectRoot, hookName, script: 'npx --no-install commitlint --edit $1'}
     );
   });
 
@@ -42,7 +42,7 @@ suite('pre-commit', () => {
 
     assert.calledWith(
       hookCreator.default,
-      {configDirectory, hookName, script: 'npx --no-install commitlint --edit $1'}
+      {projectRoot, hookName, script: 'npx --no-install commitlint --edit $1'}
     );
   });
 
@@ -54,7 +54,7 @@ suite('pre-commit', () => {
 
     assert.calledWith(
       hookCreator.default,
-      {configDirectory, hookName, script: 'npx --no-install commitlint --edit $1'}
+      {projectRoot, hookName, script: 'npx --no-install commitlint --edit $1'}
     );
   });
 

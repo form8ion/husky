@@ -1,40 +1,40 @@
-import {promises as fs} from 'node:fs';
 import core from '@form8ion/core';
 
 import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
 
+import * as hookFileWriter from './writer.js';
 import createHook from './scaffolder.js';
 
 suite('hook creator', () => {
   let sandbox;
-  const configDirectory = any.string();
+  const projectRoot = any.string();
   const hookName = any.word();
   const script = any.string();
 
   setup(() => {
     sandbox = sinon.createSandbox();
 
-    sandbox.stub(fs, 'writeFile');
+    sandbox.stub(hookFileWriter, 'default');
     sandbox.stub(core, 'directoryExists');
   });
 
   teardown(() => sandbox.restore());
 
   test('that a hook file is created', async () => {
-    core.directoryExists.withArgs(configDirectory).resolves(true);
+    core.directoryExists.withArgs(`${projectRoot}/.husky`).resolves(true);
 
-    await createHook({configDirectory, hookName, script});
+    await createHook({projectRoot, hookName, script});
 
-    assert.calledWith(fs.writeFile, `${configDirectory}/${hookName}`, script, {mode: 0o755});
+    assert.calledWith(hookFileWriter.default, {projectRoot, name: hookName, script});
   });
 
   test('that the hook file is not created if the config directory does not exist', async () => {
     core.directoryExists.resolves(false);
 
-    await createHook({configDirectory, hookName, script});
+    await createHook({projectRoot, hookName, script});
 
-    assert.notCalled(fs.writeFile);
+    assert.notCalled(hookFileWriter.default);
   });
 });

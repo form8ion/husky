@@ -1,12 +1,12 @@
+import {promises as fs} from 'node:fs';
 import {info} from '@travi/cli-messages';
 
-import makeDir from '../../thirdparty-wrappers/make-dir.js';
 import {scaffold as createHook} from '../hook/index.js';
 
 async function createPreCommitHook(projectRoot, packageManager) {
-  const configDirectory = await makeDir(`${projectRoot}/.husky`);
+  await fs.mkdir(`${projectRoot}/.husky`);
 
-  await createHook({configDirectory, hookName: 'pre-commit', script: `${packageManager} test`});
+  await createHook({projectRoot, hookName: 'pre-commit', script: `${packageManager} test`});
 }
 
 export default async function ({projectRoot, packageManager, pathWithinParent}) {
