@@ -57,7 +57,10 @@ npx --no-install commitlint --edit $1`,
         'pre-commit': `#!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npm test`
+npm test`,
+        _: {
+          h: any.string()
+        }
       }
     },
     ...'v5' === this.configFormat && {'.husky': {}},

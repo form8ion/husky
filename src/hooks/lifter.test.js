@@ -14,10 +14,16 @@ describe('hooks lifter', () => {
   it('should lift all of the hooks in the directory', async () => {
     const projectRoot = any.string();
     const hookNames = any.listOf(any.word);
-    when(fs.readdir).calledWith(`${projectRoot}/.husky`).mockResolvedValue(hookNames);
+    const directoryName = any.word();
+    const directoryContents = [
+      ...hookNames.map(name => ({isFile: () => true, name})),
+      {isFile: () => false, name: directoryName}
+    ];
+    when(fs.readdir).calledWith(`${projectRoot}/.husky`, {withFileTypes: true}).mockResolvedValue(directoryContents);
 
     await liftHooks({projectRoot});
 
     hookNames.forEach(name => expect(liftHook).toHaveBeenCalledWith({projectRoot, name}));
+    expect(liftHook).not.toHaveBeenCalledWith({projectRoot, name: directoryName});
   });
 });
