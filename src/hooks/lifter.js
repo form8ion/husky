@@ -4,8 +4,7 @@ import {lift as liftHook} from '../hook/index.js';
 export default async function ({projectRoot}) {
   const hooks = await fs.readdir(`${projectRoot}/.husky`, {withFileTypes: true});
 
-  const promises = hooks
+  return Promise.all(hooks
     .filter(hook => hook.isFile())
-    .map(({name}) => liftHook({projectRoot, name}));
-  return Promise.all(promises);
+    .map(({name}) => liftHook({projectRoot, name})));
 }
