@@ -1,6 +1,6 @@
 import {fileExists} from '@form8ion/core';
 
-import {scaffold as createHook} from '../commit-msg/index.js';
+import {scaffold as createHook, test as commitMsgHookAlreadyDefined} from '../commit-msg/index.js';
 
 /**
   this duplicates
@@ -15,14 +15,8 @@ async function commitlintConfigExists(projectRoot) {
     );
 }
 
-async function commitMsgHookNotAlreadyDefined(configDirectory) {
-  return !(await fileExists(`${configDirectory}/commit-msg`));
-}
-
 export default async function ({projectRoot}) {
-  const configDirectory = `${projectRoot}/.husky`;
-
-  if (await commitlintConfigExists(projectRoot) && await commitMsgHookNotAlreadyDefined(configDirectory)) {
+  if (await commitlintConfigExists(projectRoot) && !(await commitMsgHookAlreadyDefined({projectRoot}))) {
     await createHook({projectRoot});
   }
 }
