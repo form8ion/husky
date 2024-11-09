@@ -6,10 +6,11 @@ export default async function ({projectRoot, packageManager}) {
   const configFormatResults = await updateConfigToMatchInstalledVersion({projectRoot, packageManager});
 
   if (await modernConfigIsUsed({projectRoot})) {
-    await liftHooks({projectRoot});
+    await Promise.all([
+      liftHooks({projectRoot}),
+      configureCommitMsgHook({projectRoot})
+    ]);
   }
-
-  await configureCommitMsgHook({projectRoot});
 
   return configFormatResults;
 }

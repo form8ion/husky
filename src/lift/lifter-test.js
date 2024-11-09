@@ -41,5 +41,6 @@ suite('lifter', () => {
     await lift({projectRoot, packageManager});
 
     assert.notCalled(hooksLifter.default);
+    assert.notCalled(precommit.default);
   });
 });
