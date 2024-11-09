@@ -4,7 +4,7 @@ import {assert} from 'chai';
 import any from '@travi/any';
 import sinon from 'sinon';
 
-import * as hookCreator from '../hook/scaffolder.js';
+import * as hookCreator from '../commit-msg/scaffolder.js';
 import commitMsg from './commit-msg.js';
 
 suite('pre-commit', () => {
@@ -28,10 +28,7 @@ suite('pre-commit', () => {
 
     await commitMsg({projectRoot});
 
-    assert.calledWith(
-      hookCreator.default,
-      {projectRoot, hookName, script: 'npx --no-install commitlint --edit $1'}
-    );
+    assert.calledWith(hookCreator.default, {projectRoot});
   });
 
   test('that a `commit-msg` hook is added if modern commitlint configuration exists', async () => {
@@ -40,10 +37,7 @@ suite('pre-commit', () => {
 
     await commitMsg({projectRoot});
 
-    assert.calledWith(
-      hookCreator.default,
-      {projectRoot, hookName, script: 'npx --no-install commitlint --edit $1'}
-    );
+    assert.calledWith(hookCreator.default, {projectRoot});
   });
 
   test('that a `commit-msg` hook is added if common-js commitlint configuration exists', async () => {
@@ -52,10 +46,7 @@ suite('pre-commit', () => {
 
     await commitMsg({projectRoot});
 
-    assert.calledWith(
-      hookCreator.default,
-      {projectRoot, hookName, script: 'npx --no-install commitlint --edit $1'}
-    );
+    assert.calledWith(hookCreator.default, {projectRoot});
   });
 
   test('that a `commit-msg` hook is not added if commitlint is not configured', async () => {
