@@ -5,7 +5,7 @@ import any from '@travi/any';
 import * as hooksTester from '../hooks/tester.js';
 import * as hooksLifter from '../hooks/lifter.js';
 import * as config from './config.js';
-import * as precommit from './commit-msg.js';
+import * as precommit from '../commit-msg/scaffolder.js';
 import lift from './lifter.js';
 
 suite('lifter', () => {
