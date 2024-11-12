@@ -1,9 +1,7 @@
-import {promises as fs} from 'node:fs';
+import {loadPackageJson} from '@form8ion/javascript-core';
 
 export default async function ({projectRoot}) {
-  const packageFilePath = `${projectRoot}/package.json`;
-  const packageContents = JSON.parse(await fs.readFile(packageFilePath, 'utf-8'));
-  const {precommit, commitmsg} = packageContents.scripts;
+  const {scripts: {precommit, commitmsg}} = await loadPackageJson({projectRoot});
 
   return !!(precommit || commitmsg);
 }
