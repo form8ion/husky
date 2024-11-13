@@ -2,14 +2,14 @@ import any from '@travi/any';
 import {it, expect, vi, describe} from 'vitest';
 import {when} from 'jest-when';
 
-import {lift as liftConfig} from '../config/index.js';
-import {scaffold as configureCommitMsgHook} from '../commit-msg/index.js';
-import {lift as liftHooks, test as modernConfigIsUsed} from '../hooks/index.js';
+import {lift as liftConfig} from './config/index.js';
+import {scaffold as configureCommitMsgHook} from './commit-msg/index.js';
+import {lift as liftHooks, test as modernConfigIsUsed} from './hooks/index.js';
 import lift from './lifter.js';
 
-vi.mock('../config/index.js');
-vi.mock('../commit-msg/index.js');
-vi.mock('../hooks/index.js');
+vi.mock('./config/index.js');
+vi.mock('./commit-msg/index.js');
+vi.mock('./hooks/index.js');
 
 describe('lifter', () => {
   const projectRoot = any.string();

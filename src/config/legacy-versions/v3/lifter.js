@@ -1,7 +1,7 @@
 import {loadPackageJson, writePackageJson} from '@form8ion/javascript-core';
 import {info} from '@travi/cli-messages';
 
-import scaffold from '../../../scaffold/scaffolder.js';
+import scaffold from '../../../scaffolder.js';
 
 async function removeHuskyNpmScripts(projectRoot) {
   const packageContents = await loadPackageJson({projectRoot});

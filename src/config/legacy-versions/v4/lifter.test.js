@@ -4,11 +4,11 @@ import any from '@travi/any';
 import {describe, vi, expect, it} from 'vitest';
 import {when} from 'jest-when';
 
-import scaffold from '../../../scaffold/scaffolder.js';
+import scaffold from '../../../scaffolder.js';
 import liftV4Config from './lifter.js';
 
 vi.mock('node:fs');
-vi.mock('../../../scaffold/scaffolder.js');
+vi.mock('../../../scaffolder.js');
 
 describe('v4 config lifter', () => {
   it('should create modern config and remove the legacy rc file', async () => {

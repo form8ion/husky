@@ -1,7 +1,7 @@
 import {info} from '@travi/cli-messages';
 
-import {scaffold as createConfigDirectory} from '../hooks/index.js';
-import {scaffold as createPreCommitHook} from '../pre-commit/index.js';
+import {scaffold as createConfigDirectory} from './hooks/index.js';
+import {scaffold as createPreCommitHook} from './pre-commit/index.js';
 
 export default async function ({projectRoot, packageManager, pathWithinParent}) {
   if (pathWithinParent) return {};

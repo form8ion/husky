@@ -1,12 +1,12 @@
 import any from '@travi/any';
 import {describe, vi, it, expect} from 'vitest';
 
-import {scaffold as scaffoldHuskyDirectory} from '../hooks/index.js';
-import {scaffold as createPrecommitHook} from '../pre-commit/index.js';
+import {scaffold as scaffoldHuskyDirectory} from './hooks/index.js';
+import {scaffold as createPrecommitHook} from './pre-commit/index.js';
 import scaffold from './scaffolder.js';
 
-vi.mock('../hooks/index.js');
-vi.mock('../pre-commit/index.js');
+vi.mock('./hooks/index.js');
+vi.mock('./pre-commit/index.js');
 
 describe('scaffolder', () => {
   const projectRoot = any.string();
