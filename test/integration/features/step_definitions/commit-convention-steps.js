@@ -11,7 +11,7 @@ Given('no commit convention is defined', async function () {
 });
 
 Given('commitlint is configured for the project', async function () {
-  this.commitlintConfigContents = any.string();
+  this.commitlintConfigContents = JSON.stringify(any.simpleObject());
 });
 
 Then('no commit-msg hook is defined', async function () {

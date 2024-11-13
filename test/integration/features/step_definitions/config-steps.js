@@ -1,7 +1,7 @@
 import {promises as fs} from 'fs';
 import {Given, Then} from '@cucumber/cucumber';
 import {assert} from 'chai';
-import td from 'testdouble';
+import * as td from 'testdouble';
 
 export async function assertHookContainsScript(hook, script) {
   const pathToHookFile = `${process.cwd()}/.husky/${hook}`;
