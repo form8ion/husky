@@ -1,11 +1,12 @@
+import {execa} from 'execa';
+
 import any from '@travi/any';
 import {describe, it, vi, expect} from 'vitest';
 import {when} from 'jest-when';
 
-import execa from '../../thirdparty-wrappers/execa.js';
 import predicate from './tester.js';
 
-vi.mock('../../thirdparty-wrappers/execa.js');
+vi.mock('execa');
 
 describe('lift predicate', () => {
   const projectRoot = any.string();

@@ -1,18 +1,21 @@
-import {resolve} from 'path';
+import {dirname, resolve} from 'node:path';
+import {fileURLToPath} from 'node:url';
+
 import {After, Before, Given, When} from '@cucumber/cucumber';
 import stubbedFs from 'mock-fs';
-import td from 'testdouble';
+import * as td from 'testdouble';
 import any from '@travi/any';
 
 let lift, scaffold, test;
+const __dirname = dirname(fileURLToPath(import.meta.url));          // eslint-disable-line no-underscore-dangle
 const stubbedNodeModules = stubbedFs.load(resolve(__dirname, '..', '..', '..', '..', 'node_modules'));
 
-Before(function () {
-  this.execa = td.replace('@form8ion/execa-wrapper');
+Before(async function () {
+  this.execa = (await td.replaceEsm('execa')).execa;
   this.originalPackageContents = {...any.simpleObject(), scripts: any.simpleObject()};
 
   // eslint-disable-next-line import/no-extraneous-dependencies,import/no-unresolved
-  ({lift, scaffold, test} = require('@form8ion/husky'));
+  ({lift, scaffold, test} = await import('@form8ion/husky'));
 });
 
 After(function () {
