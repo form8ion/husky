@@ -12,5 +12,5 @@ export default async function ({projectRoot, packageManager, pathWithinParent}) 
 
   await createPreCommitHook({projectRoot, packageManager});
 
-  return {devDependencies: ['husky@latest'], scripts: {prepare: 'husky'}};
+  return {dependencies: {javascript: {development: ['husky@latest']}}, scripts: {prepare: 'husky'}};
 }

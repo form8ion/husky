@@ -13,12 +13,12 @@ describe('scaffolder', () => {
   const packageManager = any.word();
 
   it('should configure husky for the project', async () => {
-    const {devDependencies, scripts} = await scaffold({projectRoot, packageManager});
+    const {dependencies, scripts} = await scaffold({projectRoot, packageManager});
 
     expect(scaffoldHuskyDirectory).toHaveBeenCalledWith({projectRoot});
     expect(createPrecommitHook).toHaveBeenCalledWith({projectRoot, packageManager});
 
-    expect(devDependencies).toEqual(['husky@latest']);
+    expect(dependencies.javascript.development).toEqual(['husky@latest']);
     expect(scripts).toEqual({prepare: 'husky'});
   });
 
