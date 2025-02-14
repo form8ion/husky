@@ -54,7 +54,7 @@ Given('husky config is in v3 format', async function () {
 });
 
 Then('husky is configured for {string}', async function (packageManager) {
-  assert.include(this.result.devDependencies, 'husky@latest');
+  assert.include(this.result.dependencies.javascript.development, 'husky@latest');
   assert.equal(this.result.scripts.prepare, 'husky');
   await assertHookContainsScript('pre-commit', `${packageManager} test`);
 });
