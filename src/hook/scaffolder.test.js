@@ -23,7 +23,7 @@ describe('hook creator', () => {
   });
 
   it('should not create the hook file if the config directory does not exist', async () => {
-    when(modernConfigExists).mockResolvedValue(false);
+    when(modernConfigExists).calledWith({projectRoot}).mockResolvedValue(false);
 
     await createHook({projectRoot, hookName, script});
 
