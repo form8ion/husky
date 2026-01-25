@@ -2,7 +2,7 @@ import {loadPackageJson, writePackageJson} from '@form8ion/javascript-core';
 
 import any from '@travi/any';
 import {describe, vi, expect, it} from 'vitest';
-import {when} from 'jest-when';
+import {when} from 'vitest-when';
 
 import scaffold from '../../../scaffolder.js';
 import liftV3Config from './lifter.js';
@@ -21,8 +21,8 @@ describe('v3 config lifter', () => {
       ...otherPackageContents,
       scripts: {...otherScripts, precommit: any.string(), commitmsg: any.string()}
     };
-    when(loadPackageJson).calledWith({projectRoot}).mockResolvedValue(existingPackageContents);
-    when(scaffold).calledWith({projectRoot, packageManager}).mockResolvedValue(scaffoldResults);
+    when(loadPackageJson).calledWith({projectRoot}).thenResolve(existingPackageContents);
+    when(scaffold).calledWith({projectRoot, packageManager}).thenResolve(scaffoldResults);
 
     expect(await liftV3Config({projectRoot, packageManager})).toEqual(scaffoldResults);
 

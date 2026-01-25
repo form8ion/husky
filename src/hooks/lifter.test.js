@@ -2,7 +2,7 @@ import {promises as fs} from 'node:fs';
 
 import {describe, it, vi, expect} from 'vitest';
 import any from '@travi/any';
-import {when} from 'jest-when';
+import {when} from 'vitest-when';
 
 import {lift as liftHook} from '../hook/index.js';
 import liftHooks from './lifter.js';
@@ -19,7 +19,7 @@ describe('hooks lifter', () => {
       ...hookNames.map(name => ({isFile: () => true, name})),
       {isFile: () => false, name: directoryName}
     ];
-    when(fs.readdir).calledWith(`${projectRoot}/.husky`, {withFileTypes: true}).mockResolvedValue(directoryContents);
+    when(fs.readdir).calledWith(`${projectRoot}/.husky`, {withFileTypes: true}).thenResolve(directoryContents);
 
     await liftHooks({projectRoot});
 

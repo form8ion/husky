@@ -1,5 +1,5 @@
 import {it, vi, describe, expect} from 'vitest';
-import {when} from 'jest-when';
+import {when} from 'vitest-when';
 import any from '@travi/any';
 
 import modernConfigExists from '../hooks/tester.js';
@@ -15,7 +15,7 @@ describe('hook creator', () => {
   const script = any.string();
 
   it('should create a hook file', async () => {
-    when(modernConfigExists).calledWith({projectRoot}).mockResolvedValue(true);
+    when(modernConfigExists).calledWith({projectRoot}).thenResolve(true);
 
     await createHook({projectRoot, hookName, script});
 
@@ -23,7 +23,7 @@ describe('hook creator', () => {
   });
 
   it('should not create the hook file if the config directory does not exist', async () => {
-    when(modernConfigExists).calledWith({projectRoot}).mockResolvedValue(false);
+    when(modernConfigExists).calledWith({projectRoot}).thenResolve(false);
 
     await createHook({projectRoot, hookName, script});
 

@@ -2,7 +2,7 @@ import {applyEnhancers} from '@form8ion/core';
 
 import any from '@travi/any';
 import {it, describe, vi, expect} from 'vitest';
-import {when} from 'jest-when';
+import {when} from 'vitest-when';
 
 import * as v3ConfigPlugin from './legacy-versions/v3/index.js';
 import * as v4ConfigPlugin from './legacy-versions/v4/index.js';
@@ -20,7 +20,7 @@ describe('config lifter', () => {
         options: {projectRoot, packageManager},
         enhancers: {v3Config: v3ConfigPlugin, v4Config: v4ConfigPlugin}
       })
-      .mockResolvedValue(enhancerResults);
+      .thenResolve(enhancerResults);
 
     expect(await liftConfig({projectRoot, packageManager})).toEqual(enhancerResults);
   });

@@ -2,7 +2,7 @@ import {promises as fs} from 'node:fs';
 
 import any from '@travi/any';
 import {describe, vi, expect, it} from 'vitest';
-import {when} from 'jest-when';
+import {when} from 'vitest-when';
 
 import scaffold from '../../../scaffolder.js';
 import liftV4Config from './lifter.js';
@@ -15,7 +15,7 @@ describe('v4 config lifter', () => {
     const projectRoot = any.string();
     const packageManager = any.word();
     const scaffoldResults = any.simpleObject();
-    when(scaffold).calledWith({projectRoot, packageManager}).mockResolvedValue(scaffoldResults);
+    when(scaffold).calledWith({projectRoot, packageManager}).thenResolve(scaffoldResults);
 
     expect(await liftV4Config({projectRoot, packageManager})).toEqual(scaffoldResults);
 

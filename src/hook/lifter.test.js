@@ -1,6 +1,6 @@
 import {describe, it, vi, expect} from 'vitest';
 import any from '@travi/any';
-import {when} from 'jest-when';
+import {when} from 'vitest-when';
 
 import readHookFile from './reader.js';
 import writeHookFile from './writer.js';
@@ -18,7 +18,7 @@ describe('hook script lifter', () => {
 . "$(dirname "$0")/_/husky.sh"
 
 `;
-    when(readHookFile).calledWith({projectRoot, name}).mockResolvedValue(`${deprecatedLines}${hookContents}`);
+    when(readHookFile).calledWith({projectRoot, name}).thenResolve(`${deprecatedLines}${hookContents}`);
 
     await liftHook({projectRoot, name});
 
@@ -26,7 +26,7 @@ describe('hook script lifter', () => {
   });
 
   it('should not write the file if the contents are unchanged', async () => {
-    when(readHookFile).calledWith({projectRoot, name}).mockResolvedValue(hookContents);
+    when(readHookFile).calledWith({projectRoot, name}).thenResolve(hookContents);
 
     await liftHook({projectRoot, name});
 
