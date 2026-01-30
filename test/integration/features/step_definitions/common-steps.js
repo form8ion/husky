@@ -13,6 +13,7 @@ const stubbedNodeModules = stubbedFs.load(resolve(__dirname, '..', '..', '..', '
 Before(async function () {
   this.execa = (await td.replaceEsm('execa')).execa;
   this.originalPackageContents = {...any.simpleObject(), scripts: any.simpleObject()};
+  this.projectRoot = process.cwd();
 
   // eslint-disable-next-line import/no-extraneous-dependencies,import/no-unresolved
   ({lift, scaffold, test} = await import('@form8ion/husky'));
@@ -42,7 +43,7 @@ When('the project is scaffolded', async function () {
   });
 
   this.result = await scaffold({
-    projectRoot: process.cwd(),
+    projectRoot: this.projectRoot,
     packageManager: this.packageManager,
     pathWithinParent: this.pathWithinParent
   });
@@ -73,12 +74,13 @@ npm test`,
       ...this.originalPackageContents,
       scripts: {
         ...this.originalPackageContents.scripts,
-        ...'v3' === this.configFormat && {precommit: any.string(), commitmsg: any.string()}
+        ...'v3' === this.configFormat && {precommit: any.string(), commitmsg: any.string()},
+        ...this.originalPrepareScript && {prepare: this.originalPrepareScript}
       }
     })
   });
 
-  this.result = await lift({projectRoot: process.cwd(), packageManager: this.packageManager});
+  this.result = await lift({projectRoot: this.projectRoot, packageManager: this.packageManager});
 });
 
 When('the predicate is evaluated against a project', async function () {
@@ -87,5 +89,5 @@ When('the predicate is evaluated against a project', async function () {
     node_modules: stubbedNodeModules
   });
 
-  this.result = await test({projectRoot: process.cwd()});
+  this.result = await test({projectRoot: this.projectRoot});
 });

@@ -1,8 +1,10 @@
+import deepmerge from 'deepmerge';
+
 import {lift as updateConfigToMatchInstalledVersion} from './config/index.js';
 import {scaffold as configureCommitMsgHook} from './commit-msg/index.js';
 import {lift as liftHooks, test as modernConfigIsUsed} from './hooks/index.js';
 
-export default async function ({projectRoot, packageManager}) {
+export default async function lift({projectRoot, packageManager}) {
   const configFormatResults = await updateConfigToMatchInstalledVersion({projectRoot, packageManager});
 
   if (await modernConfigIsUsed({projectRoot})) {
@@ -12,5 +14,5 @@ export default async function ({projectRoot, packageManager}) {
     ]);
   }
 
-  return configFormatResults;
+  return deepmerge(configFormatResults, {scripts: {prepare: 'husky'}});
 }
