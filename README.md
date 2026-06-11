@@ -182,6 +182,6 @@ $ npm test
 
 [coverage-link]: https://codecov.io/github/form8ion/husky
 
-[coverage-badge]: https://img.shields.io/codecov/c/github/form8ion/husky?logo=codecov
+[coverage-badge]: https://img.shields.io/codecov/c/github/form8ion/husky/master?logo=codecov
 
 [slsa-badge]: https://slsa.dev/images/gh-badge-level2.svg
