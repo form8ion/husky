@@ -16,15 +16,16 @@ describe('commit-msg hook scaffolder', () => {
   const projectRoot = any.string();
 
   it('should create the hook file in the `.husky/` directory', async () => {
+    const dependencies = any.simpleObject();
     when(exists).calledWith({name: 'commitlint'}).thenResolve(true);
 
-    await scaffoldCommitMsgHook({projectRoot});
+    await scaffoldCommitMsgHook({projectRoot}, dependencies);
 
     expect(createHook).toHaveBeenCalledWith({
       projectRoot,
       hookName: 'commit-msg',
       script: 'npx --no-install commitlint --edit $1'
-    });
+    }, dependencies);
   });
 
   it('should not create the hook file if commitlint is not configured', async () => {

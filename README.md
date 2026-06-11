@@ -22,9 +22,11 @@ using [husky](https://typicode.github.io/husky)
     * [`scaffold`](#scaffold)
       * [`projectRoot` __string__ (_required_)](#projectroot-string-required)
       * [`packageManager` __string__ (_required_)](#packagemanager-string-required)
+      * [`pathWithinParent` __string__ (_optional_)](#pathwithinparent-string-optional)
     * [`test`](#test)
-    * [`lift`](#lift)
       * [`projectRoot` __string__ (_required_)](#projectroot-string-required-1)
+    * [`lift`](#lift)
+      * [`projectRoot` __string__ (_required_)](#projectroot-string-required-2)
       * [`packageManager` __string__ (_required_)](#packagemanager-string-required-1)
 * [Contributing](#contributing)
   * [Dependencies](#dependencies)
@@ -52,18 +54,25 @@ $ npm install @form8ion/husky --save
 #### Import
 
 ```javascript
-import {lift, scaffold, test} from './lib/index.cjs';
+import {lift, scaffold, test} from '@form8ion/husky';
 ```
 
 #### Execute
 
 ```javascript
 (async () => {
-  await scaffold({projectRoot: process.cwd(), packageManager: 'foo'});
+  const logger = {
+    info: () => undefined,
+    success: () => undefined,
+    warn: () => undefined,
+    error: () => undefined
+  };
 
-  await test({projectRoot: process.cwd()});
+  await scaffold({projectRoot: process.cwd(), packageManager: 'foo'}, {logger});
 
-  await lift({projectRoot: process.cwd(), packageManager: 'foo'});
+  await test({projectRoot: process.cwd()}, {logger});
+
+  await lift({projectRoot: process.cwd(), packageManager: 'foo'}, {logger});
 })();
 ```
 

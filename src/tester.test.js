@@ -10,6 +10,7 @@ vi.mock('execa');
 
 describe('lift predicate', () => {
   const projectRoot = any.string();
+  const logger = {warn: () => undefined};
 
   it('should return `false` when the project is not using husky', async () => {
     const error = Object.assign(
@@ -18,7 +19,7 @@ describe('lift predicate', () => {
     );
     when(execa).calledWith('npm', ['ls', 'husky', '--json']).thenReject(error);
 
-    expect(await predicate({projectRoot})).toBe(false);
+    expect(await predicate({projectRoot}, {logger})).toBe(false);
   });
 
   it('should return `true` when the modern config directory exists', async () => {
@@ -26,13 +27,13 @@ describe('lift predicate', () => {
       .calledWith('npm', ['ls', 'husky', '--json'])
       .thenResolve({stdout: JSON.stringify({dependencies: {husky: {version: '5.0.0'}}})});
 
-    expect(await predicate({projectRoot})).toBe(true);
+    expect(await predicate({projectRoot}, {logger})).toBe(true);
   });
 
   it('should throw other errors from checking the husky installation', async () => {
     const message = any.sentence();
     when(execa).calledWith('npm', ['ls', 'husky', '--json']).thenReject(new Error(message));
 
-    await expect(predicate({projectRoot})).rejects.toThrow(message);
+    await expect(predicate({projectRoot}, {logger})).rejects.toThrow(message);
   });
 });

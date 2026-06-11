@@ -1,5 +1,4 @@
 import {loadPackageJson, writePackageJson} from '@form8ion/javascript-core';
-import {info} from '@travi/cli-messages';
 
 import scaffold from '../../../scaffolder.js';
 
@@ -10,10 +9,12 @@ async function removeHuskyNpmScripts(projectRoot) {
   await writePackageJson({projectRoot, config: {...packageContents, scripts: otherScripts}});
 }
 
-export default async function ({projectRoot, packageManager}) {
-  info('Lifting from v3 format of Husky config', {level: 'secondary'});
+export default async function ({projectRoot, packageManager}, dependencies) {
+  const {logger} = dependencies;
+
+  logger.info('Lifting from v3 format of Husky config', {level: 'secondary'});
 
   await removeHuskyNpmScripts(projectRoot);
 
-  return scaffold({projectRoot, packageManager});
+  return scaffold({projectRoot, packageManager}, dependencies);
 }

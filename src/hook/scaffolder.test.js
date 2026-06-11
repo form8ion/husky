@@ -13,11 +13,12 @@ describe('hook creator', () => {
   const projectRoot = any.string();
   const hookName = any.word();
   const script = any.string();
+  const logger = {info: () => undefined};
 
   it('should create a hook file', async () => {
     when(modernConfigExists).calledWith({projectRoot}).thenResolve(true);
 
-    await createHook({projectRoot, hookName, script});
+    await createHook({projectRoot, hookName, script}, {logger});
 
     expect(writeHookFile).toHaveBeenCalledWith({projectRoot, name: hookName, script});
   });
@@ -25,7 +26,7 @@ describe('hook creator', () => {
   it('should not create the hook file if the config directory does not exist', async () => {
     when(modernConfigExists).calledWith({projectRoot}).thenResolve(false);
 
-    await createHook({projectRoot, hookName, script});
+    await createHook({projectRoot, hookName, script}, {logger});
 
     expect(writeHookFile).not.toHaveBeenCalled();
   });

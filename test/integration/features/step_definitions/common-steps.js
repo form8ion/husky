@@ -5,10 +5,18 @@ import {After, Before, Given, When} from '@cucumber/cucumber';
 import stubbedFs from 'mock-fs';
 import * as td from 'testdouble';
 import any from '@travi/any';
+import createDebugFor from 'debug';
 
 let lift, scaffold, test;
 const __dirname = dirname(fileURLToPath(import.meta.url));          // eslint-disable-line no-underscore-dangle
 const stubbedNodeModules = stubbedFs.load(resolve(__dirname, '..', '..', '..', '..', 'node_modules'));
+const debug = createDebugFor('test:common-steps');
+const logger = {
+  success: debug,
+  info: debug,
+  warn: debug,
+  error: debug
+};
 
 Before(async function () {
   this.execa = (await td.replaceEsm('execa')).execa;
@@ -42,11 +50,10 @@ When('the project is scaffolded', async function () {
     })
   });
 
-  this.result = await scaffold({
-    projectRoot: this.projectRoot,
-    packageManager: this.packageManager,
-    pathWithinParent: this.pathWithinParent
-  });
+  this.result = await scaffold(
+    {projectRoot: this.projectRoot, packageManager: this.packageManager, pathWithinParent: this.pathWithinParent},
+    {logger}
+  );
 });
 
 When('the husky details are lifted', async function () {
@@ -80,7 +87,7 @@ npm test`,
     })
   });
 
-  this.result = await lift({projectRoot: this.projectRoot, packageManager: this.packageManager});
+  this.result = await lift({projectRoot: this.projectRoot, packageManager: this.packageManager}, {logger});
 });
 
 When('the predicate is evaluated against a project', async function () {
@@ -89,5 +96,5 @@ When('the predicate is evaluated against a project', async function () {
     node_modules: stubbedNodeModules
   });
 
-  this.result = await test({projectRoot: this.projectRoot});
+  this.result = await test({projectRoot: this.projectRoot}, {logger});
 });

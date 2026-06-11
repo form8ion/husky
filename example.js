@@ -9,9 +9,16 @@ stubbedFs({'package.json': JSON.stringify({scripts: {}})});
 // #### Execute
 
 (async () => {
-  await scaffold({projectRoot: process.cwd(), packageManager: 'foo'});
+  const logger = {
+    info: () => undefined,
+    success: () => undefined,
+    warn: () => undefined,
+    error: () => undefined
+  };
 
-  await test({projectRoot: process.cwd()});
+  await scaffold({projectRoot: process.cwd(), packageManager: 'foo'}, {logger});
 
-  await lift({projectRoot: process.cwd(), packageManager: 'foo'});
+  await test({projectRoot: process.cwd()}, {logger});
+
+  await lift({projectRoot: process.cwd(), packageManager: 'foo'}, {logger});
 })();

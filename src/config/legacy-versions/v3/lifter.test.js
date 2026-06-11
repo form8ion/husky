@@ -17,14 +17,15 @@ describe('v3 config lifter', () => {
     const scaffoldResults = any.simpleObject();
     const otherScripts = any.simpleObject();
     const otherPackageContents = any.simpleObject();
+    const dependencies = {...any.simpleObject(), logger: {info: () => undefined}};
     const existingPackageContents = {
       ...otherPackageContents,
       scripts: {...otherScripts, precommit: any.string(), commitmsg: any.string()}
     };
     when(loadPackageJson).calledWith({projectRoot}).thenResolve(existingPackageContents);
-    when(scaffold).calledWith({projectRoot, packageManager}).thenResolve(scaffoldResults);
+    when(scaffold).calledWith({projectRoot, packageManager}, dependencies).thenResolve(scaffoldResults);
 
-    expect(await liftV3Config({projectRoot, packageManager})).toEqual(scaffoldResults);
+    expect(await liftV3Config({projectRoot, packageManager}, dependencies)).toEqual(scaffoldResults);
 
     expect(writePackageJson).toHaveBeenCalledWith({
       projectRoot,

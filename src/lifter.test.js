@@ -21,13 +21,14 @@ describe('lifter', () => {
   it('should update the husky config to match the installed version', async () => {
     const configFormatResults = any.simpleObject();
     const mergedResults = any.simpleObject();
-    when(liftConfig).calledWith({projectRoot, packageManager}).thenResolve(configFormatResults);
+    const dependencies = any.simpleObject();
+    when(liftConfig).calledWith({projectRoot, packageManager}, dependencies).thenResolve(configFormatResults);
     when(modernConfigIsUsed).calledWith({projectRoot}).thenResolve(true);
     when(deepmerge).calledWith(configFormatResults, {scripts: {prepare: 'husky'}}).thenReturn(mergedResults);
 
-    expect(await lift({projectRoot, packageManager})).toEqual(mergedResults);
+    expect(await lift({projectRoot, packageManager}, dependencies)).toEqual(mergedResults);
 
-    expect(configureCommitMsgHook).toHaveBeenCalledWith({projectRoot});
+    expect(configureCommitMsgHook).toHaveBeenCalledWith({projectRoot}, dependencies);
     expect(liftHooks).toHaveBeenCalledWith({projectRoot});
   });
 

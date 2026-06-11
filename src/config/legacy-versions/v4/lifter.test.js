@@ -15,9 +15,10 @@ describe('v4 config lifter', () => {
     const projectRoot = any.string();
     const packageManager = any.word();
     const scaffoldResults = any.simpleObject();
-    when(scaffold).calledWith({projectRoot, packageManager}).thenResolve(scaffoldResults);
+    const dependencies = {...any.simpleObject(), logger: {info: () => undefined}};
+    when(scaffold).calledWith({projectRoot, packageManager}, dependencies).thenResolve(scaffoldResults);
 
-    expect(await liftV4Config({projectRoot, packageManager})).toEqual(scaffoldResults);
+    expect(await liftV4Config({projectRoot, packageManager}, dependencies)).toEqual(scaffoldResults);
 
     expect(fs.unlink).toHaveBeenCalledWith(`${projectRoot}/.huskyrc.json`);
   });

@@ -1,8 +1,7 @@
 import {execa} from 'execa';
-import {warn} from '@travi/cli-messages';
 import {directoryExists} from '@form8ion/core';
 
-export default async function ({projectRoot}) {
+export default async function ({projectRoot}, {logger}) {
   if (await directoryExists(`${projectRoot}/.husky`)) return true;
 
   try {
@@ -11,7 +10,7 @@ export default async function ({projectRoot}) {
     return true;
   } catch (e) {
     if ('npm ls husky --json' === e.command) {
-      warn('Husky is not currently installed as a dependency');
+      logger.warn('Husky is not currently installed as a dependency');
 
       return false;
     }
